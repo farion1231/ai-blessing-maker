@@ -17,6 +17,8 @@ export default function BlessingGenerator() {
   const [blessing, setBlessing] = useState<string>('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string>('')
+  const [copySuccess, setCopySuccess] = useState(false)
+  const [copyFading, setCopyFading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -50,16 +52,30 @@ export default function BlessingGenerator() {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(blessing)
-      alert('🎉 祝福语已复制到剪贴板！快去分享这份温暖吧~ ✨')
+      setCopySuccess(true)
+      setCopyFading(false)
+      
+      // 2.5秒后开始消失动画
+      setTimeout(() => {
+        setCopyFading(true)
+      }, 2500)
+      
+      // 3秒后完全隐藏
+      setTimeout(() => {
+        setCopySuccess(false)
+        setCopyFading(false)
+      }, 3000)
     } catch (err) {
       console.error('复制失败:', err)
-      alert('❌ 复制失败，请手动选择文字复制')
+      setError('复制失败，请手动选择文字复制')
     }
   }
 
   const handleReset = () => {
     setBlessing('')
     setError('')
+    setCopySuccess(false)
+    setCopyFading(false)
   }
 
   return (
@@ -79,6 +95,8 @@ export default function BlessingGenerator() {
           error={error}
           options={options}
           loading={loading}
+          copySuccess={copySuccess}
+          copyFading={copyFading}
           onCopy={handleCopy}
           onRegenerate={handleRegenerate}
         />
