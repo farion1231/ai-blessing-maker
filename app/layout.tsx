@@ -19,14 +19,14 @@ export default function RootLayout({
           <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-500/20 to-orange-500/30"></div>
           <div className="relative z-10 py-12">
-            <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto px-4">
               <h1 className="text-5xl font-black text-center festive-title mb-4">
                 🎊 AI祝福语生成器 🎊
               </h1>
               <p className="text-center text-xl font-semibold text-white drop-shadow-lg">
                 ✨ 智能生成个性化祝福语，让每一份祝福都独一无二 ✨
               </p>
-              <div className="text-center mt-4">
+              <div className="text-center mt-4 space-x-2">
                 <span className="inline-block text-3xl animate-bounce">🎉</span>
                 <span
                   className="inline-block text-3xl animate-bounce"
@@ -59,10 +59,10 @@ export default function RootLayout({
         <main className="py-8 flex-grow">{children}</main>
         <footer className="relative overflow-hidden bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 text-white py-8">
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-          <div className="relative z-10 container mx-auto px-4 text-center">
-            <div className="mb-4">
+          <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
+            <div className="mb-4 space-x-2">
               <span className="text-2xl">🎊</span>
-              <span className="text-2xl mx-2">🎉</span>
+              <span className="text-2xl">🎉</span>
               <span className="text-2xl">🎊</span>
             </div>
             <p className="text-lg font-semibold drop-shadow-lg">

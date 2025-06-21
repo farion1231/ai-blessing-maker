@@ -63,27 +63,25 @@ export default function BlessingGenerator() {
   }
 
   return (
-    <div className="container mx-auto px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-8">
-          <BlessingForm
-            options={options}
-            loading={loading}
-            hasBlessing={!!blessing}
-            onOptionsChange={setOptions}
-            onSubmit={handleSubmit}
-            onReset={handleReset}
-          />
+    <div className="max-w-6xl mx-auto px-4">
+      <div className="grid lg:grid-cols-2 gap-8">
+        <BlessingForm
+          options={options}
+          loading={loading}
+          hasBlessing={!!blessing}
+          onOptionsChange={setOptions}
+          onSubmit={handleSubmit}
+          onReset={handleReset}
+        />
 
-          <ResultDisplay
-            blessing={blessing}
-            error={error}
-            options={options}
-            loading={loading}
-            onCopy={handleCopy}
-            onRegenerate={handleRegenerate}
-          />
-        </div>
+        <ResultDisplay
+          blessing={blessing}
+          error={error}
+          options={options}
+          loading={loading}
+          onCopy={handleCopy}
+          onRegenerate={handleRegenerate}
+        />
       </div>
     </div>
   )
