@@ -1,15 +1,15 @@
-'use client'
+"use client";
 
-import { scenarios, festivals, targetPersons, styles } from '@/lib/config'
-import { BlessingOptions } from '@/lib/api-client'
+import { scenarios, festivals, targetPersons, styles } from "@/lib/config";
+import { BlessingOptions } from "@/lib/api-client";
 
 interface BlessingFormProps {
-  options: BlessingOptions
-  loading: boolean
-  hasBlessing: boolean
-  onOptionsChange: (options: BlessingOptions) => void
-  onSubmit: (e: React.FormEvent) => void
-  onReset: () => void
+  options: BlessingOptions;
+  loading: boolean;
+  hasBlessing: boolean;
+  onOptionsChange: (options: BlessingOptions) => void;
+  onSubmit: (e: React.FormEvent) => void;
+  onReset: () => void;
 }
 
 export default function BlessingForm({
@@ -18,18 +18,17 @@ export default function BlessingForm({
   hasBlessing,
   onOptionsChange,
   onSubmit,
-  onReset
+  onReset,
 }: BlessingFormProps) {
   return (
     <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-3xl shadow-xl border-2 border-yellow-400 p-6 relative overflow-hidden backdrop-blur-sm">
       {/* 装饰元素 */}
-      <div className="absolute top-4 left-4 text-2xl">🎯</div>
       <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-yellow-200/30 to-orange-200/30 rounded-full blur-xl"></div>
-      
+
       <h2 className="text-2xl font-black text-center mb-6 festive-title">
         🎨 选择祝福场景 🎨
       </h2>
-      
+
       <form onSubmit={onSubmit} className="space-y-4 relative z-10">
         {/* 场景类型 */}
         <div className="space-y-2">
@@ -39,10 +38,16 @@ export default function BlessingForm({
           <select
             className="w-full px-4 py-3 border-2 border-yellow-400 rounded-2xl text-base transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-red-600 focus:ring-4 focus:ring-red-600/20 focus:-translate-y-0.5"
             value={options.scenario}
-            onChange={(e) => onOptionsChange({...options, scenario: e.target.value})}
+            onChange={(e) =>
+              onOptionsChange({ ...options, scenario: e.target.value })
+            }
           >
             {scenarios.map((scenario) => (
-              <option key={scenario.value} value={scenario.value} className="py-2">
+              <option
+                key={scenario.value}
+                value={scenario.value}
+                className="py-2"
+              >
                 {scenario.label}
               </option>
             ))}
@@ -57,10 +62,16 @@ export default function BlessingForm({
           <select
             className="w-full px-4 py-3 border-2 border-yellow-400 rounded-2xl text-base transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-red-600 focus:ring-4 focus:ring-red-600/20 focus:-translate-y-0.5"
             value={options.festival}
-            onChange={(e) => onOptionsChange({...options, festival: e.target.value})}
+            onChange={(e) =>
+              onOptionsChange({ ...options, festival: e.target.value })
+            }
           >
             {festivals.map((festival) => (
-              <option key={festival.value} value={festival.value} className="py-2">
+              <option
+                key={festival.value}
+                value={festival.value}
+                className="py-2"
+              >
                 {festival.label}
               </option>
             ))}
@@ -75,7 +86,9 @@ export default function BlessingForm({
           <select
             className="w-full px-4 py-3 border-2 border-yellow-400 rounded-2xl text-base transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-red-600 focus:ring-4 focus:ring-red-600/20 focus:-translate-y-0.5"
             value={options.targetPerson}
-            onChange={(e) => onOptionsChange({...options, targetPerson: e.target.value})}
+            onChange={(e) =>
+              onOptionsChange({ ...options, targetPerson: e.target.value })
+            }
           >
             {targetPersons.map((person) => (
               <option key={person.value} value={person.value} className="py-2">
@@ -93,7 +106,9 @@ export default function BlessingForm({
           <select
             className="w-full px-4 py-3 border-2 border-yellow-400 rounded-2xl text-base transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-red-600 focus:ring-4 focus:ring-red-600/20 focus:-translate-y-0.5"
             value={options.style}
-            onChange={(e) => onOptionsChange({...options, style: e.target.value})}
+            onChange={(e) =>
+              onOptionsChange({ ...options, style: e.target.value })
+            }
           >
             {styles.map((style) => (
               <option key={style.value} value={style.value} className="py-2">
@@ -112,7 +127,7 @@ export default function BlessingForm({
           >
             {/* 闪光效果 */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-            
+
             <div className="relative flex items-center justify-center gap-3">
               {loading ? (
                 <>
@@ -120,13 +135,11 @@ export default function BlessingForm({
                   🎊 生成中，请稍候...
                 </>
               ) : (
-                <>
-                  ✨ 生成祝福语 ✨
-                </>
+                <>✨ 生成祝福语 ✨</>
               )}
             </div>
           </button>
-          
+
           {hasBlessing && (
             <button
               type="button"
@@ -139,5 +152,5 @@ export default function BlessingForm({
         </div>
       </form>
     </div>
-  )
+  );
 }
