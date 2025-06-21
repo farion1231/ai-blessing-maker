@@ -33,6 +33,20 @@ export default function BlessingGenerator() {
     }
   }
 
+  const handleRegenerate = async () => {
+    setLoading(true)
+    setError('')
+    
+    try {
+      const result = await generateBlessing(options)
+      setBlessing(result)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '生成失败，请重试')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(blessing)
@@ -67,7 +81,7 @@ export default function BlessingGenerator() {
             options={options}
             loading={loading}
             onCopy={handleCopy}
-            onRegenerate={handleSubmit}
+            onRegenerate={handleRegenerate}
           />
         </div>
       </div>
