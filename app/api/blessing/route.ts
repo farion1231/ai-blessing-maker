@@ -15,13 +15,12 @@ function createBlessingPrompt(options: BlessingRequest): string {
   const { scenario, festival, targetPerson, style = "温馨" } = options
   
   return `请为我生成一段祝福语，要求如下：
-- 场景：${scenario}
-- 节日：${festival || "无特定节日"}
+- 祝福场合：${scenario}
 - 目标人群：${targetPerson}
 - 风格：${style}
 
 请生成一段真诚、温暖、符合中文表达习惯的祝福语。祝福语应该：
-1. 符合指定的场景和节日氛围
+1. 符合指定的祝福场合和氛围
 2. 针对目标人群使用合适的称呼和语气
 3. 内容积极正面，表达美好祝愿
 4. 长度适中，大约50-100字

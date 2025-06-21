@@ -1,15 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import { scenarios, festivals, targetPersons, styles } from '@/lib/config'
+import { occasions, targetPersons, styles } from '@/lib/config'
 import { generateBlessing, BlessingOptions } from '@/lib/api-client'
 import BlessingForm from './BlessingForm'
 import ResultDisplay from './ResultDisplay'
 
 export default function BlessingGenerator() {
   const [options, setOptions] = useState<BlessingOptions>({
-    scenario: scenarios[0].value,
-    festival: festivals[0].value,
+    scenario: occasions[0].value,
+    festival: "",
     targetPerson: targetPersons[0].value,
     style: styles[0].value,
   })

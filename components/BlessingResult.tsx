@@ -25,9 +25,7 @@ export default function BlessingResult({
       
       <div className="mb-6 relative z-10">
         <div className="text-sm font-semibold text-orange-600 mb-4 text-center space-x-2">
-          <span>🎭 {options.scenario}</span>
-          <span>•</span>
-          <span>🎊 {options.festival || '无特定节日'}</span>
+          <span>🎉 {options.scenario}</span>
           <span>•</span>
           <span>👥 {options.targetPerson}</span>
           <span>•</span>

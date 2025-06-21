@@ -1,6 +1,6 @@
 "use client";
 
-import { scenarios, festivals, targetPersons, styles } from "@/lib/config";
+import { occasions, targetPersons, styles } from "@/lib/config";
 import { BlessingOptions } from "@/lib/api-client";
 
 interface BlessingFormProps {
@@ -26,55 +26,57 @@ export default function BlessingForm({
       <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-yellow-200/30 to-orange-200/30 rounded-full blur-xl"></div>
 
       <h2 className="text-2xl font-black text-center mb-6 festive-title">
-        🎨 选择祝福场景 🎨
+        🎨 选择祝福设置 🎨
       </h2>
 
       <form onSubmit={onSubmit} className="space-y-4 relative z-10">
-        {/* 场景类型 */}
+        {/* 祝福场合 */}
         <div className="space-y-2">
           <label className="block text-lg font-bold text-red-600 drop-shadow-sm">
-            🎭 场景类型
+            🎉 祝福场合
           </label>
           <select
             className="w-full px-4 py-3 border-2 border-yellow-400 rounded-2xl text-base transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-red-600 focus:ring-4 focus:ring-red-600/20 focus:-translate-y-0.5"
             value={options.scenario}
             onChange={(e) =>
-              onOptionsChange({ ...options, scenario: e.target.value })
+              onOptionsChange({ ...options, scenario: e.target.value, festival: "" })
             }
           >
-            {scenarios.map((scenario) => (
-              <option
-                key={scenario.value}
-                value={scenario.value}
-                className="py-2"
-              >
-                {scenario.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* 节日庆典 */}
-        <div className="space-y-2">
-          <label className="block text-lg font-bold text-red-600 drop-shadow-sm">
-            🎊 节日庆典
-          </label>
-          <select
-            className="w-full px-4 py-3 border-2 border-yellow-400 rounded-2xl text-base transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-red-600 focus:ring-4 focus:ring-red-600/20 focus:-translate-y-0.5"
-            value={options.festival}
-            onChange={(e) =>
-              onOptionsChange({ ...options, festival: e.target.value })
-            }
-          >
-            {festivals.map((festival) => (
-              <option
-                key={festival.value}
-                value={festival.value}
-                className="py-2"
-              >
-                {festival.label}
-              </option>
-            ))}
+            <optgroup label="传统节日">
+              {occasions.filter(o => o.category === "传统节日").map(occasion => (
+                <option key={occasion.value} value={occasion.value} className="py-2">
+                  {occasion.label}
+                </option>
+              ))}
+            </optgroup>
+            <optgroup label="现代节日">
+              {occasions.filter(o => o.category === "现代节日").map(occasion => (
+                <option key={occasion.value} value={occasion.value} className="py-2">
+                  {occasion.label}
+                </option>
+              ))}
+            </optgroup>
+            <optgroup label="人生时刻">
+              {occasions.filter(o => o.category === "人生时刻").map(occasion => (
+                <option key={occasion.value} value={occasion.value} className="py-2">
+                  {occasion.label}
+                </option>
+              ))}
+            </optgroup>
+            <optgroup label="成就庆祝">
+              {occasions.filter(o => o.category === "成就庆祝").map(occasion => (
+                <option key={occasion.value} value={occasion.value} className="py-2">
+                  {occasion.label}
+                </option>
+              ))}
+            </optgroup>
+            <optgroup label="生活祝福">
+              {occasions.filter(o => o.category === "生活祝福").map(occasion => (
+                <option key={occasion.value} value={occasion.value} className="py-2">
+                  {occasion.label}
+                </option>
+              ))}
+            </optgroup>
           </select>
         </div>
 
