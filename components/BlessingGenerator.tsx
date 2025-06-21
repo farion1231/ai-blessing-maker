@@ -79,7 +79,7 @@ export default function BlessingGenerator() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4">
+    <div className="w-full max-w-6xl">
       <div className="grid lg:grid-cols-2 gap-8">
         <BlessingForm
           options={options}

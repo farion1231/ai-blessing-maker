@@ -56,7 +56,7 @@ export default function RootLayout({
             </div>
           </div>
         </header>
-        <main className="py-8 flex-grow">{children}</main>
+        <main className="flex-grow flex items-center justify-center px-4 py-8">{children}</main>
         <footer className="relative overflow-hidden bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 text-white py-8">
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
           <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
