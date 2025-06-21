@@ -130,7 +130,7 @@ export default function BlessingForm({
             {/* 闪光效果 */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
 
-            <div className="relative flex items-center justify-center gap-3">
+            <div className="relative flex items-center justify-center gap-3 min-h-[1.75rem]">
               {loading ? (
                 <>
                   <div className="loading-spinner"></div>

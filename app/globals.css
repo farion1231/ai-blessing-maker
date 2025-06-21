@@ -84,13 +84,14 @@
   }
 
   .loading-spinner {
-    border: 4px solid #fbbf24;
-    border-top: 4px solid #dc2626;
+    border: 3px solid #fbbf24;
+    border-top: 3px solid #dc2626;
     border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
     animation: festiveSpin 1s linear infinite;
     box-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+    flex-shrink: 0;
   }
 
   .festive-title {

@@ -38,7 +38,7 @@ export default function ResultDisplay({
       {error && <ErrorMessage message={error} />}
 
       {blessing ? (
-        <div className="space-y-4">
+        <div className="space-y-4 min-h-[320px]">
           <BlessingResult
             blessing={blessing}
             options={options}
@@ -46,20 +46,23 @@ export default function ResultDisplay({
             onCopy={onCopy}
             onRegenerate={onRegenerate}
           />
-          
-          {/* 复制成功提示 */}
-          {copySuccess && (
-            <div className={`bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-2xl p-4 text-center font-semibold shadow-lg ${copyFading ? 'fade-out' : 'slide-in-up'}`}>
-              <div className="flex items-center justify-center gap-2">
-                <span className="text-2xl">🎉</span>
-                <span>祝福语已复制到剪贴板！快去分享这份温暖吧~</span>
-                <span className="text-2xl">✨</span>
+
+          {/* 复制成功提示区域 - 预留固定空间 */}
+          <div className="h-20 flex items-center justify-center">
+            {copySuccess && (
+              <div
+                className={`bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-2xl p-4 text-center font-semibold shadow-lg ${
+                  copyFading ? "fade-out" : "slide-in-up"
+                } w-full`}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-2xl">🎉</span>
+                  <span>祝福语已复制到剪贴板！快去分享这份温暖吧~</span>
+                  <span className="text-2xl">✨</span>
+                </div>
               </div>
-              <div className="mt-2 text-sm opacity-90">
-                {copyFading ? '正在消失...' : '将在 3 秒后自动消失'}
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       ) : (
         <EmptyState />
