@@ -1,6 +1,6 @@
 # 🎊 AI祝福语生成器
 
-基于 Next.js 14 + TypeScript 构建的智能祝福语生成应用，集成 DeepSeek AI，为不同场景和节日生成个性化祝福语。
+基于 Next.js 14 + TypeScript 构建的智能祝福语生成应用，支持多AI供应商切换，为不同场景和节日生成个性化祝福语。
 
 ## ✨ 主要功能
 
@@ -18,7 +18,7 @@
 - **前端框架**：Next.js 14 with App Router
 - **开发语言**：TypeScript
 - **样式框架**：Tailwind CSS
-- **AI集成**：DeepSeek Chat API
+- **多AI支持**：支持 DeepSeek、OpenAI、通义千问、文心一言、Kimi 等
 - **包管理器**：pnpm
 - **部署平台**：支持 Vercel、Netlify 等
 
@@ -42,10 +42,20 @@ pnpm install
 cp .env.example .env.local
 ```
 
-2. 配置 DeepSeek API：
+2. 配置 AI API（必填主力API，可选备用API）：
 ```env
-DEEPSEEK_API_KEY=your_deepseek_api_key_here
-DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
+# 主力AI API（必需）
+PRIMARY_AI_API_KEY=sk-xxxxx
+PRIMARY_AI_BASE_URL=https://api.deepseek.com
+PRIMARY_AI_MODEL=deepseek-chat
+
+# 备用AI API（可选，用于故障转移）
+FALLBACK_AI_API_KEY=sk-xxxxx
+FALLBACK_AI_BASE_URL=https://api.openai.com/v1
+FALLBACK_AI_MODEL=gpt-3.5-turbo
+
+# 故障转移设置
+ENABLE_FALLBACK=true
 ```
 
 ### 启动开发服务器
@@ -104,7 +114,51 @@ ai-blessing-maker/
 
 ### 修改AI提示词
 
-在 `app/api/blessing/route.ts` 中修改 `generatePrompt` 函数。
+在 `app/api/blessing/route.ts` 中修改 `createBlessingPrompt` 函数。
+
+## 🔄 多AI供应商支持
+
+### 支持的AI服务商
+
+- **DeepSeek**：高性价比，中文理解优秀
+- **OpenAI**：GPT系列，全球领先
+- **通义千问**：阿里云，中文场景优化
+- **文心一言**：百度，本土化强
+- **Kimi**：月之暗面，长文本处理
+
+### 配置示例
+
+**DeepSeek（推荐）**
+```env
+PRIMARY_AI_API_KEY=sk-xxxxx
+PRIMARY_AI_BASE_URL=https://api.deepseek.com
+PRIMARY_AI_MODEL=deepseek-chat
+```
+
+**OpenAI**
+```env
+PRIMARY_AI_API_KEY=sk-xxxxx
+PRIMARY_AI_BASE_URL=https://api.openai.com/v1
+PRIMARY_AI_MODEL=gpt-3.5-turbo
+```
+
+**通义千问**
+```env
+PRIMARY_AI_API_KEY=sk-xxxxx
+PRIMARY_AI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+PRIMARY_AI_MODEL=qwen-turbo
+```
+
+**Kimi**
+```env
+PRIMARY_AI_API_KEY=sk-xxxxx
+PRIMARY_AI_BASE_URL=https://api.moonshot.cn/v1
+PRIMARY_AI_MODEL=moonshot-v1-8k
+```
+
+### 故障转移
+
+系统支持主力API+备用API配置，当主力API失败时自动切换到备用API，确保服务稳定性。
 
 ## ♿ 无障碍支持
 
@@ -148,7 +202,7 @@ ai-blessing-maker/
 ### Vercel 部署（推荐）
 
 1. 连接 GitHub 仓库到 Vercel
-2. 配置环境变量（DEEPSEEK_API_KEY 等）
+2. 配置环境变量（PRIMARY_AI_API_KEY 等）
 3. 自动部署
 
 ### 其他平台

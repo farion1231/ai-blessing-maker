@@ -26,7 +26,8 @@ export default function BlessingForm({
       <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-yellow-200/30 to-orange-200/30 rounded-full blur-xl"></div>
 
       <h2 className="text-2xl font-black text-center mb-6 festive-title">
-        <span aria-hidden="true">🎨</span> 选择祝福设置 <span aria-hidden="true">🎨</span>
+        <span aria-hidden="true">🎨</span> 选择祝福设置{" "}
+        <span aria-hidden="true">🎨</span>
       </h2>
 
       <form
@@ -37,7 +38,10 @@ export default function BlessingForm({
       >
         {/* 祝福场合 */}
         <div className="space-y-2">
-          <label htmlFor="scenario-select" className="block text-lg font-bold text-red-600 drop-shadow-sm">
+          <label
+            htmlFor="scenario-select"
+            className="block text-lg font-bold text-red-600 drop-shadow-sm"
+          >
             <span aria-hidden="true">🎉</span> 祝福场合
           </label>
           <select
@@ -123,7 +127,10 @@ export default function BlessingForm({
 
         {/* 目标人群 */}
         <div className="space-y-2">
-          <label htmlFor="target-person-select" className="block text-lg font-bold text-red-600 drop-shadow-sm">
+          <label
+            htmlFor="target-person-select"
+            className="block text-lg font-bold text-red-600 drop-shadow-sm"
+          >
             <span aria-hidden="true">👥</span> 目标人群
           </label>
           <select
@@ -145,7 +152,10 @@ export default function BlessingForm({
 
         {/* 祝福风格 */}
         <div className="space-y-2">
-          <label htmlFor="style-select" className="block text-lg font-bold text-red-600 drop-shadow-sm">
+          <label
+            htmlFor="style-select"
+            className="block text-lg font-bold text-red-600 drop-shadow-sm"
+          >
             <span aria-hidden="true">🎨</span> 祝福风格
           </label>
           <select
@@ -171,7 +181,11 @@ export default function BlessingForm({
             type="submit"
             disabled={loading}
             className="flex-1 px-6 py-4 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 text-white font-bold text-lg rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-600/30 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none overflow-hidden relative group"
-            aria-label={loading ? "正在生成祝福语，请稍候" : "根据选择的设置生成个性化祝福语"}
+            aria-label={
+              loading
+                ? "正在生成祝福语，请稍候"
+                : "根据选择的设置生成个性化祝福语"
+            }
           >
             {/* 闪光效果 */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>

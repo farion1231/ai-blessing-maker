@@ -32,7 +32,8 @@ export default function ResultDisplay({
       <div className="absolute -top-10 -left-10 w-20 h-20 bg-gradient-to-br from-yellow-200/30 to-orange-200/30 rounded-full blur-xl"></div>
 
       <h2 className="text-2xl font-black text-center mb-6 festive-title">
-        <span aria-hidden="true">🎉</span> 生成结果 <span aria-hidden="true">🎉</span>
+        <span aria-hidden="true">🎉</span> 生成结果{" "}
+        <span aria-hidden="true">🎉</span>
       </h2>
 
       {error && <ErrorMessage message={error} />}
