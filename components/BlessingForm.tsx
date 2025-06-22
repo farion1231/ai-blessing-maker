@@ -40,19 +40,21 @@ export default function BlessingForm({
           >
             <span aria-hidden="true">🎉</span> 祝福场合
           </label>
-          <select
-            id="scenario-select"
-            className="w-full px-4 py-3 border-2 border-yellow-400 rounded-2xl text-base transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-red-600 focus:ring-4 focus:ring-red-600/20 focus:-translate-y-0.5"
-            value={options.scenario}
-            aria-label="选择祝福场合"
-            onChange={(e) =>
-              onOptionsChange({
-                ...options,
-                scenario: e.target.value,
-                festival: "",
-              })
-            }
-          >
+          <div className="relative">
+            <select
+              id="scenario-select"
+              className="w-full pl-4 pr-12 py-3 border-2 border-yellow-400 rounded-2xl text-base transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-red-600 focus:ring-4 focus:ring-red-600/20 focus:-translate-y-0.5 appearance-none"
+              value={options.scenario}
+              aria-label="选择祝福场合"
+              onChange={(e) =>
+                onOptionsChange({
+                  ...options,
+                  scenario: e.target.value,
+                  festival: "",
+                })
+              }
+            >
+              <option value="">请选择场合</option>
             <optgroup label="传统节日">
               {occasions
                 .filter((o) => o.category === "传统节日")
@@ -118,7 +120,13 @@ export default function BlessingForm({
                   </option>
                 ))}
             </optgroup>
-          </select>
+            </select>
+            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+              <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         {/* 目标人群 */}
@@ -129,21 +137,29 @@ export default function BlessingForm({
           >
             <span aria-hidden="true">👥</span> 目标人群
           </label>
-          <select
-            id="target-person-select"
-            className="w-full px-4 py-3 border-2 border-yellow-400 rounded-2xl text-base transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-red-600 focus:ring-4 focus:ring-red-600/20 focus:-translate-y-0.5"
-            value={options.targetPerson}
-            aria-label="选择目标人群"
-            onChange={(e) =>
-              onOptionsChange({ ...options, targetPerson: e.target.value })
-            }
-          >
-            {targetPersons.map((person) => (
-              <option key={person.value} value={person.value} className="py-2">
-                {person.label}
-              </option>
-            ))}
-          </select>
+          <div className="relative">
+            <select
+              id="target-person-select"
+              className="w-full pl-4 pr-12 py-3 border-2 border-yellow-400 rounded-2xl text-base transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-red-600 focus:ring-4 focus:ring-red-600/20 focus:-translate-y-0.5 appearance-none"
+              value={options.targetPerson}
+              aria-label="选择目标人群"
+              onChange={(e) =>
+                onOptionsChange({ ...options, targetPerson: e.target.value })
+              }
+            >
+              <option value="">请选择目标人群</option>
+              {targetPersons.map((person) => (
+                <option key={person.value} value={person.value} className="py-2">
+                  {person.label}
+                </option>
+              ))}
+            </select>
+            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+              <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         {/* 祝福风格 */}
@@ -154,21 +170,29 @@ export default function BlessingForm({
           >
             <span aria-hidden="true">🎨</span> 祝福风格
           </label>
-          <select
-            id="style-select"
-            className="w-full px-4 py-3 border-2 border-yellow-400 rounded-2xl text-base transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-red-600 focus:ring-4 focus:ring-red-600/20 focus:-translate-y-0.5"
-            value={options.style}
-            aria-label="选择祝福风格"
-            onChange={(e) =>
-              onOptionsChange({ ...options, style: e.target.value })
-            }
-          >
-            {styles.map((style) => (
-              <option key={style.value} value={style.value} className="py-2">
-                {style.label}
-              </option>
-            ))}
-          </select>
+          <div className="relative">
+            <select
+              id="style-select"
+              className="w-full pl-4 pr-12 py-3 border-2 border-yellow-400 rounded-2xl text-base transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-red-600 focus:ring-4 focus:ring-red-600/20 focus:-translate-y-0.5 appearance-none"
+              value={options.style}
+              aria-label="选择祝福风格"
+              onChange={(e) =>
+                onOptionsChange({ ...options, style: e.target.value })
+              }
+            >
+              <option value="">请选择风格</option>
+              {styles.map((style) => (
+                <option key={style.value} value={style.value} className="py-2">
+                  {style.label}
+                </option>
+              ))}
+            </select>
+            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+              <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         {/* 生成按钮 */}
