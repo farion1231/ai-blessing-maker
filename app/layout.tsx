@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
-      <body>
+      <body className="min-h-screen flex flex-col">
         <header className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-500/20 to-orange-500/30"></div>
@@ -56,7 +56,11 @@ export default function RootLayout({
             </div>
           </div>
         </header>
-        <main className="flex-grow flex items-center justify-center px-4 py-8">{children}</main>
+        <main className="flex-1 flex items-center justify-center py-8">
+          <div className="w-full max-w-6xl mx-auto px-4">
+            {children}
+          </div>
+        </main>
         <footer className="relative overflow-hidden bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 text-white py-8">
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
           <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">

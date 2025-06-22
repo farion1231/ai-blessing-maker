@@ -79,8 +79,7 @@ export default function BlessingGenerator() {
   }
 
   return (
-    <div className="w-full max-w-6xl">
-      <div className="grid lg:grid-cols-2 gap-8">
+    <div className="grid lg:grid-cols-2 gap-8">
         <BlessingForm
           options={options}
           loading={loading}
@@ -101,6 +100,5 @@ export default function BlessingGenerator() {
           onRegenerate={handleRegenerate}
         />
       </div>
-    </div>
   )
 }
