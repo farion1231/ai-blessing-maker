@@ -111,6 +111,42 @@
     100% { background-position: 0% 50%; }
   }
 
+  /* 屏幕阅读器专用样式 */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* 动画偏好支持 - 为动作敏感用户禁用动画 */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    
+    .animate-bounce,
+    .animate-pulse {
+      animation: none !important;
+    }
+    
+    body {
+      animation: none !important;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%) !important;
+      background-size: 100% 100% !important;
+    }
+  }
+
   /* Chrome浏览器特定修复 */
   @media screen and (-webkit-min-device-pixel-ratio:0) {
     body {

@@ -79,7 +79,16 @@ export default function BlessingGenerator() {
   }
 
   return (
-    <div className="grid lg:grid-cols-2 gap-8">
+    <>
+      {/* 屏幕阅读器状态通知区域 */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {loading && "正在生成祝福语，请稍候..."}
+        {error && `错误：${error}`}
+        {copySuccess && "祝福语已成功复制到剪贴板"}
+        {blessing && !loading && !error && "祝福语生成完成"}
+      </div>
+      
+      <div className="grid lg:grid-cols-2 gap-8">
         <BlessingForm
           options={options}
           loading={loading}
@@ -100,5 +109,6 @@ export default function BlessingGenerator() {
           onRegenerate={handleRegenerate}
         />
       </div>
+    </>
   )
 }

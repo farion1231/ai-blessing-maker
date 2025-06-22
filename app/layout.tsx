@@ -26,7 +26,7 @@ export default function RootLayout({
               <p className="text-center text-xl font-semibold text-white drop-shadow-lg">
                 ✨ 智能生成个性化祝福语，让每一份祝福都独一无二 ✨
               </p>
-              <div className="text-center mt-4 space-x-2">
+              <div className="text-center mt-4 space-x-2" aria-hidden="true">
                 <span className="inline-block text-3xl animate-bounce">🎉</span>
                 <span
                   className="inline-block text-3xl animate-bounce"
@@ -56,7 +56,7 @@ export default function RootLayout({
             </div>
           </div>
         </header>
-        <main className="flex-1 flex items-center justify-center py-8">
+        <main className="flex-1 flex items-center justify-center py-8" role="main">
           <div className="w-full max-w-6xl mx-auto px-4">
             {children}
           </div>
@@ -64,7 +64,7 @@ export default function RootLayout({
         <footer className="relative overflow-hidden bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 text-white py-8">
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
           <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
-            <div className="mb-4 space-x-2">
+            <div className="mb-4 space-x-2" aria-hidden="true">
               <span className="text-2xl">🎊</span>
               <span className="text-2xl">🎉</span>
               <span className="text-2xl">🎊</span>
