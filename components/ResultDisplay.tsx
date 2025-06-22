@@ -27,7 +27,7 @@ export default function ResultDisplay({
   onRegenerate,
 }: ResultDisplayProps) {
   return (
-    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-3xl shadow-xl border-2 border-yellow-400 p-6 relative overflow-hidden backdrop-blur-sm">
+    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-3xl shadow-xl border-2 border-yellow-400 p-6 relative overflow-hidden backdrop-blur-sm h-[520px] flex flex-col">
       {/* 装饰元素 */}
       <div className="absolute -top-10 -left-10 w-20 h-20 bg-gradient-to-br from-yellow-200/30 to-orange-200/30 rounded-full blur-xl"></div>
 
@@ -38,17 +38,19 @@ export default function ResultDisplay({
       {error && <ErrorMessage message={error} />}
 
       {blessing ? (
-        <div className="space-y-4 min-h-[320px]">
-          <BlessingResult
-            blessing={blessing}
-            options={options}
-            loading={loading}
-            onCopy={onCopy}
-            onRegenerate={onRegenerate}
-          />
+        <div className="flex-1 flex flex-col">
+          <div className="flex-1 overflow-hidden">
+            <BlessingResult
+              blessing={blessing}
+              options={options}
+              loading={loading}
+              onCopy={onCopy}
+              onRegenerate={onRegenerate}
+            />
+          </div>
 
           {/* 复制成功提示区域 - 预留固定空间 */}
-          <div className="h-20 flex items-center justify-center">
+          <div className="h-20 flex items-center justify-center flex-shrink-0">
             {copySuccess && (
               <div
                 className={`bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-2xl p-4 text-center font-semibold shadow-lg ${
@@ -65,7 +67,9 @@ export default function ResultDisplay({
           </div>
         </div>
       ) : (
-        <EmptyState />
+        <div className="flex-1 flex items-center justify-center">
+          <EmptyState />
+        </div>
       )}
     </div>
   );

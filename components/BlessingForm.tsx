@@ -21,7 +21,7 @@ export default function BlessingForm({
   onReset,
 }: BlessingFormProps) {
   return (
-    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-3xl shadow-xl border-2 border-yellow-400 p-6 relative overflow-hidden backdrop-blur-sm">
+    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-3xl shadow-xl border-2 border-yellow-400 p-6 relative overflow-hidden backdrop-blur-sm h-[520px] flex flex-col">
       {/* 装饰元素 */}
       <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-yellow-200/30 to-orange-200/30 rounded-full blur-xl"></div>
 
@@ -29,7 +29,7 @@ export default function BlessingForm({
         🎨 选择祝福设置 🎨
       </h2>
 
-      <form onSubmit={onSubmit} className="space-y-4 relative z-10">
+      <form onSubmit={onSubmit} className="space-y-4 relative z-10 flex-1 flex flex-col">
         {/* 祝福场合 */}
         <div className="space-y-2">
           <label className="block text-lg font-bold text-red-600 drop-shadow-sm">
@@ -121,7 +121,7 @@ export default function BlessingForm({
         </div>
 
         {/* 按钮组 */}
-        <div className="flex gap-4 mt-8 pt-4">
+        <div className="flex gap-4 mt-auto pt-4">
           <button
             type="submit"
             disabled={loading}

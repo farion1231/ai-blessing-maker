@@ -18,25 +18,27 @@ export default function BlessingResult({
   onRegenerate
 }: BlessingResultProps) {
   return (
-    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-100 rounded-3xl p-6 shadow-xl relative overflow-hidden fade-in">
+    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-100 rounded-3xl p-6 shadow-xl relative overflow-hidden fade-in h-full flex flex-col">
       {/* 装饰星星 */}
       <div className="absolute top-4 right-4 text-2xl animate-pulse">✨</div>
       <div className="absolute -bottom-5 -left-5 w-16 h-16 bg-gradient-to-br from-yellow-200/40 to-orange-200/40 rounded-full blur-lg"></div>
       
-      <div className="mb-6 relative z-10">
-        <div className="text-sm font-semibold text-orange-600 mb-4 text-center space-x-2">
+      <div className="flex-1 relative z-10 flex flex-col min-h-0">
+        <div className="text-sm font-semibold text-orange-600 mb-4 text-center space-x-2 flex-shrink-0">
           <span>🎉 {options.scenario}</span>
           <span>•</span>
           <span>👥 {options.targetPerson}</span>
           <span>•</span>
           <span>🎨 {options.style}</span>
         </div>
-        <div className="text-xl leading-relaxed text-center font-medium text-amber-900 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-600 bg-clip-text text-transparent drop-shadow-sm">
-          {blessing}
+        <div className="flex-1 flex items-center justify-center min-h-0">
+          <div className="text-xl leading-relaxed text-center font-medium text-amber-900 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-600 bg-clip-text text-transparent drop-shadow-sm max-h-full overflow-y-auto">
+            {blessing}
+          </div>
         </div>
       </div>
       
-      <div className="flex gap-4 justify-center">
+      <div className="flex gap-4 justify-center mt-6 flex-shrink-0">
         <button
           onClick={onCopy}
           className="px-6 py-3 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-600/30 flex items-center gap-2"
