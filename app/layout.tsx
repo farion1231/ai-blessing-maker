@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "AI祝福语生成器",
   description: "使用AI智能生成个性化祝福语，支持多种场景、节日和目标人群选择",
   keywords: "祝福语,AI生成,个性化,节日祝福,生日祝福",
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
