@@ -21,7 +21,7 @@ export default function BlessingForm({
   onReset,
 }: BlessingFormProps) {
   return (
-    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-3xl shadow-xl border-2 border-yellow-400 p-6 relative overflow-hidden backdrop-blur-sm h-[520px] flex flex-col">
+    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-3xl shadow-xl border-2 border-yellow-400 p-6 relative overflow-hidden backdrop-blur-sm h-[500px] flex flex-col">
       {/* 装饰元素 */}
       <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-yellow-200/30 to-orange-200/30 rounded-full blur-xl"></div>
 
@@ -29,7 +29,10 @@ export default function BlessingForm({
         🎨 选择祝福设置 🎨
       </h2>
 
-      <form onSubmit={onSubmit} className="space-y-4 relative z-10 flex-1 flex flex-col">
+      <form
+        onSubmit={onSubmit}
+        className="space-y-4 relative z-10 flex-1 flex flex-col"
+      >
         {/* 祝福场合 */}
         <div className="space-y-2">
           <label className="block text-lg font-bold text-red-600 drop-shadow-sm">
@@ -39,43 +42,77 @@ export default function BlessingForm({
             className="w-full px-4 py-3 border-2 border-yellow-400 rounded-2xl text-base transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-red-600 focus:ring-4 focus:ring-red-600/20 focus:-translate-y-0.5"
             value={options.scenario}
             onChange={(e) =>
-              onOptionsChange({ ...options, scenario: e.target.value, festival: "" })
+              onOptionsChange({
+                ...options,
+                scenario: e.target.value,
+                festival: "",
+              })
             }
           >
             <optgroup label="传统节日">
-              {occasions.filter(o => o.category === "传统节日").map(occasion => (
-                <option key={occasion.value} value={occasion.value} className="py-2">
-                  {occasion.label}
-                </option>
-              ))}
+              {occasions
+                .filter((o) => o.category === "传统节日")
+                .map((occasion) => (
+                  <option
+                    key={occasion.value}
+                    value={occasion.value}
+                    className="py-2"
+                  >
+                    {occasion.label}
+                  </option>
+                ))}
             </optgroup>
             <optgroup label="现代节日">
-              {occasions.filter(o => o.category === "现代节日").map(occasion => (
-                <option key={occasion.value} value={occasion.value} className="py-2">
-                  {occasion.label}
-                </option>
-              ))}
+              {occasions
+                .filter((o) => o.category === "现代节日")
+                .map((occasion) => (
+                  <option
+                    key={occasion.value}
+                    value={occasion.value}
+                    className="py-2"
+                  >
+                    {occasion.label}
+                  </option>
+                ))}
             </optgroup>
             <optgroup label="人生时刻">
-              {occasions.filter(o => o.category === "人生时刻").map(occasion => (
-                <option key={occasion.value} value={occasion.value} className="py-2">
-                  {occasion.label}
-                </option>
-              ))}
+              {occasions
+                .filter((o) => o.category === "人生时刻")
+                .map((occasion) => (
+                  <option
+                    key={occasion.value}
+                    value={occasion.value}
+                    className="py-2"
+                  >
+                    {occasion.label}
+                  </option>
+                ))}
             </optgroup>
             <optgroup label="成就庆祝">
-              {occasions.filter(o => o.category === "成就庆祝").map(occasion => (
-                <option key={occasion.value} value={occasion.value} className="py-2">
-                  {occasion.label}
-                </option>
-              ))}
+              {occasions
+                .filter((o) => o.category === "成就庆祝")
+                .map((occasion) => (
+                  <option
+                    key={occasion.value}
+                    value={occasion.value}
+                    className="py-2"
+                  >
+                    {occasion.label}
+                  </option>
+                ))}
             </optgroup>
             <optgroup label="生活祝福">
-              {occasions.filter(o => o.category === "生活祝福").map(occasion => (
-                <option key={occasion.value} value={occasion.value} className="py-2">
-                  {occasion.label}
-                </option>
-              ))}
+              {occasions
+                .filter((o) => o.category === "生活祝福")
+                .map((occasion) => (
+                  <option
+                    key={occasion.value}
+                    value={occasion.value}
+                    className="py-2"
+                  >
+                    {occasion.label}
+                  </option>
+                ))}
             </optgroup>
           </select>
         </div>
