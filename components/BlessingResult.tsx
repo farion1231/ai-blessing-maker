@@ -18,7 +18,7 @@ export default function BlessingResult({
   onRegenerate
 }: BlessingResultProps) {
   return (
-    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-100 rounded-3xl p-6 shadow-xl relative overflow-hidden fade-in h-full flex flex-col">
+    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-xl p-6 relative overflow-hidden fade-in h-full flex flex-col">
       {/* 装饰星星 */}
       <div className="absolute top-4 right-4 text-2xl animate-pulse">✨</div>
       <div className="absolute -bottom-5 -left-5 w-16 h-16 bg-gradient-to-br from-yellow-200/40 to-orange-200/40 rounded-full blur-lg"></div>
