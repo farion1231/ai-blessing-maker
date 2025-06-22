@@ -6,19 +6,15 @@ import { BlessingOptions } from "@/lib/api-client";
 interface BlessingFormProps {
   options: BlessingOptions;
   loading: boolean;
-  hasBlessing: boolean;
   onOptionsChange: (options: BlessingOptions) => void;
   onSubmit: (e: React.FormEvent) => void;
-  onReset: () => void;
 }
 
 export default function BlessingForm({
   options,
   loading,
-  hasBlessing,
   onOptionsChange,
   onSubmit,
-  onReset,
 }: BlessingFormProps) {
   return (
     <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-3xl shadow-xl border-2 border-yellow-400 p-6 relative overflow-hidden backdrop-blur-sm h-[500px] flex flex-col">
@@ -175,12 +171,12 @@ export default function BlessingForm({
           </select>
         </div>
 
-        {/* 按钮组 */}
-        <div className="flex gap-4 mt-auto pt-4">
+        {/* 生成按钮 */}
+        <div className="mt-auto pt-4">
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 px-6 py-4 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 text-white font-bold text-lg rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-600/30 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none overflow-hidden relative group"
+            className="w-full px-6 py-4 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 text-white font-bold text-lg rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-600/30 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none overflow-hidden relative group"
             aria-label={
               loading
                 ? "正在生成祝福语，请稍候"
@@ -201,17 +197,6 @@ export default function BlessingForm({
               )}
             </div>
           </button>
-
-          {hasBlessing && (
-            <button
-              type="button"
-              onClick={onReset}
-              className="px-6 py-4 bg-gradient-to-r from-orange-500 to-yellow-500 text-white font-bold rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-500/30"
-              aria-label="重置所有选项并清除当前结果"
-            >
-              🔄 重置
-            </button>
-          )}
         </div>
       </form>
     </div>

@@ -71,12 +71,6 @@ export default function BlessingGenerator() {
     }
   }
 
-  const handleReset = () => {
-    setBlessing('')
-    setError('')
-    setCopySuccess(false)
-    setCopyFading(false)
-  }
 
   return (
     <>
@@ -92,10 +86,8 @@ export default function BlessingGenerator() {
         <BlessingForm
           options={options}
           loading={loading}
-          hasBlessing={!!blessing}
           onOptionsChange={setOptions}
           onSubmit={handleSubmit}
-          onReset={handleReset}
         />
 
         <ResultDisplay
