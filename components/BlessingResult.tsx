@@ -21,7 +21,8 @@ export default function BlessingResult({
     <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-xl p-6 relative overflow-hidden fade-in h-full flex flex-col">
       {/* 装饰星星 */}
       <div className="absolute top-4 right-4 text-2xl animate-pulse">✨</div>
-      <div className="absolute -bottom-5 -left-5 w-16 h-16 bg-gradient-to-br from-yellow-200/40 to-orange-200/40 rounded-full blur-lg"></div>
+      {/* 右下角装饰 */}
+      <div className="absolute -bottom-3 -right-3 w-12 h-12 bg-gradient-to-tl from-red-200/30 to-yellow-200/30 rounded-full blur-md"></div>
       
       <div className="flex-1 relative z-10 flex flex-col min-h-0">
         <div className="text-sm font-semibold text-orange-600 mb-4 text-center space-x-2 flex-shrink-0">
