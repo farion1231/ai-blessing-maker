@@ -35,7 +35,7 @@ export default function SelectInput({
       <div className="relative">
         <select
           id={id}
-          className="w-full px-3 py-2 border-2 border-yellow-400 rounded-xl text-sm transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-md hover:shadow-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/20 appearance-none"
+          className="form-select"
           value={value}
           onChange={(e) => onChange(e.target.value)}
         >

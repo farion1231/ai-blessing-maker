@@ -39,9 +39,9 @@ export default function BlessingForm({
   };
 
   return (
-    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-3xl shadow-xl border-2 border-yellow-400 p-6 relative overflow-hidden backdrop-blur-sm min-h-[400px] flex flex-col transition-all duration-500 ease-in-out">
+    <div className="card-primary min-h-[400px] flex flex-col transition-all duration-500 ease-in-out">
       {/* 装饰元素 */}
-      <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-yellow-200/30 to-orange-200/30 rounded-full blur-xl"></div>
+      <div className="decoration-tr"></div>
 
       {/* 模式选择 */}
       <div className="text-center mb-6">
@@ -54,10 +54,10 @@ export default function BlessingForm({
           <button
             type="button"
             onClick={() => toggleMode(false)}
-            className={`px-4 py-2 rounded-xl font-semibold transition-all duration-300 ${
+            className={`btn-mode ${
               !isSmartMode
-                ? "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg"
-                : "text-gray-600 hover:text-gray-800"
+                ? "btn-mode-active from-red-500 to-orange-500"
+                : "btn-mode-inactive"
             }`}
           >
             🎯 快速模板
@@ -65,10 +65,10 @@ export default function BlessingForm({
           <button
             type="button"
             onClick={() => toggleMode(true)}
-            className={`px-4 py-2 rounded-xl font-semibold transition-all duration-300 ${
+            className={`btn-mode ${
               isSmartMode
-                ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
-                : "text-gray-600 hover:text-gray-800"
+                ? "btn-mode-active from-blue-500 to-purple-500"
+                : "btn-mode-inactive"
             }`}
           >
             💬 智能描述
@@ -109,7 +109,7 @@ export default function BlessingForm({
               (!isSmartMode && (!options.scenario || !options.targetPerson)) ||
               (isSmartMode && !options.customDescription?.trim())
             }
-            className="w-full px-6 py-4 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 text-white font-bold text-lg rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-600/30 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none overflow-hidden relative group"
+            className="btn-generate group"
             aria-label={
               loading
                 ? "正在生成祝福语，请稍候"

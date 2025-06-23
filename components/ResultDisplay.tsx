@@ -27,9 +27,9 @@ export default function ResultDisplay({
   onRegenerate,
 }: ResultDisplayProps) {
   return (
-    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-3xl shadow-xl border-2 border-yellow-400 p-6 relative overflow-hidden backdrop-blur-sm h-[380px] sm:h-[420px] md:h-[480px] lg:h-[520px] xl:h-[560px] flex flex-col transition-all duration-300 ease-in-out">
+    <div className="card-primary h-[380px] sm:h-[420px] md:h-[480px] lg:h-[520px] xl:h-[560px] flex flex-col transition-all duration-300 ease-in-out">
       {/* 装饰元素 */}
-      <div className="absolute -top-10 -left-10 w-20 h-20 bg-gradient-to-br from-yellow-200/30 to-orange-200/30 rounded-full blur-xl"></div>
+      <div className="decoration-tl"></div>
 
       <h2 className="text-2xl font-black text-center mb-6 festive-title">
         <span aria-hidden="true">🎉</span> 生成结果{" "}
@@ -55,7 +55,7 @@ export default function ResultDisplay({
             {copySuccess && (
               <div
                 className={`bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-2xl p-4 text-center font-semibold shadow-lg ${
-                  copyFading ? "animate-pureFadeOut" : "animate-fadeIn"
+                  copyFading ? "fade-out" : "fade-in"
                 } max-w-md mx-auto`}
               >
                 <div className="flex items-center justify-center gap-2">
