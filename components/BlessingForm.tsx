@@ -21,21 +21,20 @@ export default function BlessingForm({
 
   const toggleMode = (useSmartMode: boolean) => {
     setIsSmartMode(useSmartMode);
-    onOptionsChange({ 
-      ...options, 
+    onOptionsChange({
+      ...options,
       useSmartMode,
       // 清空相关字段
-      ...(useSmartMode ? {
-        scenario: "",
-        festival: "",
-        targetPerson: "",
-        style: ""
-      } : {
-        customDescription: "",
-        recipientName: "",
-        relationship: "",
-        context: ""
-      })
+      ...(useSmartMode
+        ? {
+            scenario: "",
+            festival: "",
+            targetPerson: "",
+            style: "",
+          }
+        : {
+            customDescription: "",
+          }),
     });
   };
 
@@ -50,7 +49,7 @@ export default function BlessingForm({
           <span aria-hidden="true">🤖</span> 智能祝福生成器{" "}
           <span aria-hidden="true">✨</span>
         </h2>
-        
+
         <div className="inline-flex rounded-2xl bg-white/80 p-1 shadow-lg border border-yellow-300">
           <button
             type="button"
@@ -84,71 +83,31 @@ export default function BlessingForm({
         aria-label="祝福语生成器设置表单"
       >
         {isSmartMode ? (
-          /* 智能描述模式 */
+          /* 智能描述模式 - 纯净版 */
           <div className="space-y-4 flex-1 flex flex-col">
-            {/* 主要描述区域 */}
-            <div className="space-y-2 flex-1 flex flex-col">
+            <div className="space-y-3 flex-1 flex flex-col">
               <label
                 htmlFor="custom-description"
                 className="block text-lg font-bold text-blue-600 drop-shadow-sm"
               >
-                <span aria-hidden="true">💭</span> 告诉我你想要什么样的祝福
+                <span aria-hidden="true">🧠</span> 描述你的祝福需求
               </label>
+              <div className="text-sm text-gray-600 mb-2">
+                💡 <strong>智能提示：</strong>
+                告诉我你想要什么样的祝福，包括对象、关系、场景、特殊情况等，我会自动理解并生成个性化内容
+              </div>
               <textarea
                 id="custom-description"
-                className="w-full p-4 border-2 border-blue-300 rounded-2xl text-base resize-none transition-all duration-300 bg-gradient-to-br from-blue-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-600/20 placeholder-gray-500 flex-1 min-h-[120px]"
-                placeholder="例如：给我大学室友小王发生日祝福，他是个程序员，最近刚跳槽到大厂，性格比较内向但很靠谱，我们认识10年了..."
+                className="w-full p-4 border-2 border-blue-300 rounded-2xl text-base resize-none transition-all duration-300 bg-gradient-to-br from-blue-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-600/20 placeholder-gray-500 flex-1 min-h-[200px]"
+                placeholder="🌟 例如：给我大学室友小王发生日祝福，他是个程序员，最近刚跳槽到字节，性格内向但很靠谱，我们认识10年了..."
                 value={options.customDescription || ""}
                 onChange={(e) =>
-                  onOptionsChange({ ...options, customDescription: e.target.value })
+                  onOptionsChange({
+                    ...options,
+                    customDescription: e.target.value,
+                  })
                 }
               />
-            </div>
-            
-            {/* 可选细节字段 */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">
-                  <span aria-hidden="true">👤</span> 收礼人姓名
-                </label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border border-blue-200 rounded-xl text-sm bg-white/80 focus:outline-none focus:border-blue-400"
-                  placeholder="可选"
-                  value={options.recipientName || ""}
-                  onChange={(e) =>
-                    onOptionsChange({ ...options, recipientName: e.target.value })
-                  }
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">
-                  <span aria-hidden="true">🤝</span> 你们的关系
-                </label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border border-blue-200 rounded-xl text-sm bg-white/80 focus:outline-none focus:border-blue-400"
-                  placeholder="如：大学同学"
-                  value={options.relationship || ""}
-                  onChange={(e) =>
-                    onOptionsChange({ ...options, relationship: e.target.value })
-                  }
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">
-                  <span aria-hidden="true">📝</span> 特殊情况
-                </label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border border-blue-200 rounded-xl text-sm bg-white/80 focus:outline-none focus:border-blue-400"
-                  placeholder="如：刚升职"
-                  value={options.context || ""}
-                  onChange={(e) =>
-                    onOptionsChange({ ...options, context: e.target.value })
-                  }
-                />
-              </div>
             </div>
           </div>
         ) : (
@@ -178,17 +137,24 @@ export default function BlessingForm({
                 >
                   <option value="">选择场合</option>
                   {occasions.map((occasion) => (
-                    <option
-                      key={occasion.value}
-                      value={occasion.value}
-                    >
+                    <option key={occasion.value} value={occasion.value}>
                       {occasion.label}
                     </option>
                   ))}
                 </select>
                 <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  <svg
+                    className="w-4 h-4 text-gray-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
                   </svg>
                 </div>
               </div>
@@ -209,7 +175,10 @@ export default function BlessingForm({
                   value={options.targetPerson}
                   aria-label="选择目标人群"
                   onChange={(e) =>
-                    onOptionsChange({ ...options, targetPerson: e.target.value })
+                    onOptionsChange({
+                      ...options,
+                      targetPerson: e.target.value,
+                    })
                   }
                 >
                   <option value="">选择对象</option>
@@ -220,8 +189,18 @@ export default function BlessingForm({
                   ))}
                 </select>
                 <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  <svg
+                    className="w-4 h-4 text-gray-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
                   </svg>
                 </div>
               </div>
@@ -253,8 +232,18 @@ export default function BlessingForm({
                   ))}
                 </select>
                 <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  <svg
+                    className="w-4 h-4 text-gray-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
                   </svg>
                 </div>
               </div>
@@ -266,7 +255,11 @@ export default function BlessingForm({
         <div className="mt-auto pt-4">
           <button
             type="submit"
-            disabled={loading || (!isSmartMode && (!options.scenario || !options.targetPerson)) || (isSmartMode && !options.customDescription?.trim())}
+            disabled={
+              loading ||
+              (!isSmartMode && (!options.scenario || !options.targetPerson)) ||
+              (isSmartMode && !options.customDescription?.trim())
+            }
             className="w-full px-6 py-4 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 text-white font-bold text-lg rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-600/30 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none overflow-hidden relative group"
             aria-label={
               loading

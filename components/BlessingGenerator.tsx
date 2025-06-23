@@ -14,9 +14,6 @@ export default function BlessingGenerator() {
     style: "",
     // 新增智能模式字段
     customDescription: "",
-    recipientName: "",
-    relationship: "",
-    context: "",
     useSmartMode: false,
   })
   

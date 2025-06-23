@@ -10,9 +10,6 @@ interface BlessingRequest {
   
   // 智能描述模式
   customDescription?: string;
-  recipientName?: string;
-  relationship?: string;
-  context?: string;
   useSmartMode?: boolean;
 }
 
@@ -23,40 +20,22 @@ interface AIConfig {
 }
 
 function createSmartPrompt(options: BlessingRequest): string {
-  const { customDescription, recipientName, relationship, context } = options;
+  const { customDescription } = options;
   
-  let prompt = `请根据以下描述生成一段个性化的祝福语：
+  return `请根据以下描述生成一段个性化的祝福语：
 
 用户描述：${customDescription}
-`;
-  
-  if (recipientName) {
-    prompt += `收礼人姓名：${recipientName}
-`;
-  }
-  
-  if (relationship) {
-    prompt += `关系：${relationship}
-`;
-  }
-  
-  if (context) {
-    prompt += `特殊情况：${context}
-`;
-  }
-  
-  prompt += `
+
 请生成一段真诚、个性化、符合情境的祝福语。要求：
-1. 深度理解用户描述的具体情况和情感需求
-2. 如果提供了姓名，自然地融入祝福语中
-3. 根据关系和情境选择合适的语气和称呼
-4. 体现对特殊情况的理解和关怀
-5. 长度适中，真诚自然，避免模板化
-6. 语言温暖有力，富有情感共鸣
+1. 深度理解用户描述中的所有细节：人物关系、具体情况、情感背景等
+2. 自动识别并恰当使用文中提到的姓名、称呼、关系
+3. 根据描述的场景和情境选择最合适的语气和风格
+4. 体现对具体情况的理解和针对性关怀
+5. 长度适中（50-100字），真诚自然，避免套话模板
+6. 语言温暖有力，富有个人色彩和情感共鸣
+7. 如果描述中包含特殊背景，要巧妙地体现出来
 
 请直接返回祝福语内容，不需要其他说明。`;
-  
-  return prompt;
 }
 
 function createTemplatePrompt(options: BlessingRequest): string {
