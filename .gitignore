@@ -42,3 +42,4 @@ pnpm-debug.log*
 # claude code
 /.claude/
 .claude/settings*
+CLAUDE.md
