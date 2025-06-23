@@ -39,7 +39,7 @@ export default function BlessingForm({
   };
 
   return (
-    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-3xl shadow-xl border-2 border-yellow-400 p-6 relative overflow-hidden backdrop-blur-sm min-h-[500px] flex flex-col">
+    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-3xl shadow-xl border-2 border-yellow-400 p-6 relative overflow-hidden backdrop-blur-sm h-[380px] sm:h-[420px] md:h-[480px] lg:h-[520px] xl:h-[560px] flex flex-col transition-all duration-500 ease-in-out">
       {/* 装饰元素 */}
       <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-yellow-200/30 to-orange-200/30 rounded-full blur-xl"></div>
 
@@ -82,24 +82,24 @@ export default function BlessingForm({
         role="form"
         aria-label="祝福语生成器设置表单"
       >
-        {isSmartMode ? (
-          /* 智能描述模式 - 纯净版 */
-          <div className="space-y-4 flex-1 flex flex-col">
-            <div className="space-y-3 flex-1 flex flex-col">
+        <div className={`transition-all duration-500 ease-in-out flex-1 flex flex-col overflow-hidden ${isSmartMode ? 'opacity-100' : 'opacity-0 max-h-0'}`}>
+          {isSmartMode && (
+            /* 智能描述模式 - 可滚动版 */
+            <div className="space-y-3 flex-1 flex flex-col animate-fadeIn overflow-hidden">
               <label
                 htmlFor="custom-description"
-                className="block text-lg font-bold text-blue-600 drop-shadow-sm"
+                className="block text-lg font-bold text-blue-600 drop-shadow-sm flex-shrink-0"
               >
                 <span aria-hidden="true">🧠</span> 描述你的祝福需求
               </label>
-              <div className="text-sm text-gray-600 mb-2">
+              <div className="text-sm text-gray-600 bg-blue-50/50 p-3 rounded-xl border border-blue-200 flex-shrink-0">
                 💡 <strong>智能提示：</strong>
-                告诉我你想要什么样的祝福，包括对象、关系、场景、特殊情况等，我会自动理解并生成个性化内容
+                告诉我对象、关系、场景等信息，AI会生成个性化祝福
               </div>
               <textarea
                 id="custom-description"
-                className="w-full p-4 border-2 border-blue-300 rounded-2xl text-base resize-none transition-all duration-300 bg-gradient-to-br from-blue-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-600/20 placeholder-gray-500 flex-1 min-h-[200px]"
-                placeholder="🌟 例如：给我大学室友小王发生日祝福，他是个程序员，最近刚跳槽到字节，性格内向但很靠谱，我们认识10年了..."
+                className="w-full p-4 border-2 border-blue-300 rounded-2xl text-base resize-none transition-all duration-300 bg-gradient-to-br from-blue-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-600/20 placeholder-gray-500 flex-1 min-h-0 overflow-y-auto"
+                placeholder="🌟 例如：给室友小王发生日祝福，他是程序员，刚跳槽，性格内向但靠谱，认识10年了..."
                 value={options.customDescription || ""}
                 onChange={(e) =>
                   onOptionsChange({
@@ -109,10 +109,13 @@ export default function BlessingForm({
                 }
               />
             </div>
-          </div>
-        ) : (
-          /* 快速模板模式 - 压缩版 */
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1">
+          )}
+        </div>
+
+        <div className={`transition-all duration-500 ease-in-out flex-1 overflow-hidden ${!isSmartMode ? 'opacity-100' : 'opacity-0 max-h-0'}`}>
+          {!isSmartMode && (
+            /* 快速模板模式 - 可滚动版 */
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 animate-fadeIn overflow-y-auto pr-2">
             {/* 祝福场合 */}
             <div className="space-y-2">
               <label
@@ -248,8 +251,9 @@ export default function BlessingForm({
                 </div>
               </div>
             </div>
-          </div>
-        )}
+            </div>
+          )}
+        </div>
 
         {/* 生成按钮 */}
         <div className="mt-auto pt-4">

@@ -75,6 +75,24 @@
     animation: fadeIn 0.5s ease-in;
   }
 
+  @keyframes pureFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes pureFadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+
+  .animate-fadeIn {
+    animation: pureFadeIn 0.5s ease-out;
+  }
+
+  .animate-pureFadeOut {
+    animation: pureFadeOut 0.5s ease-in forwards;
+  }
+
   .slide-in-up {
     animation: slideInUp 0.5s ease-out;
   }
