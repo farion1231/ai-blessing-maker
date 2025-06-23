@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { occasions, targetPersons, styles, getDateBasedRecommendations, popularCombinations, RecommendationItem } from "@/lib/config";
 import { BlessingOptions } from "@/lib/api-client";
+import SmartModeForm from "./SmartModeForm";
+import TemplateModeForm from "./TemplateModeForm";
 
 interface BlessingFormProps {
   options: BlessingOptions;
@@ -18,16 +19,12 @@ export default function BlessingForm({
   onSubmit,
 }: BlessingFormProps) {
   const [isSmartMode, setIsSmartMode] = useState(options.useSmartMode || false);
-  
-  const dateRecommendations = getDateBasedRecommendations();
-  const allRecommendations = [...dateRecommendations, ...popularCombinations];
 
   const toggleMode = (useSmartMode: boolean) => {
     setIsSmartMode(useSmartMode);
     onOptionsChange({
       ...options,
       useSmartMode,
-      // 清空相关字段
       ...(useSmartMode
         ? {
             scenario: "",
@@ -39,18 +36,6 @@ export default function BlessingForm({
             customDescription: "",
           }),
     });
-  };
-
-  const applyRecommendation = (recommendation: RecommendationItem) => {
-    onOptionsChange({
-      ...options,
-      scenario: recommendation.scenario,
-      targetPerson: recommendation.targetPerson,
-      style: recommendation.style,
-      festival: "", // 清空节日选择，因为场合已经包含了节日信息
-      useSmartMode: false // 确保在快速模板模式
-    });
-    setIsSmartMode(false);
   };
 
   return (
@@ -99,203 +84,19 @@ export default function BlessingForm({
       >
         <div className={`transition-all duration-500 ease-in-out flex-1 flex flex-col overflow-hidden ${isSmartMode ? 'opacity-100' : 'opacity-0 max-h-0'}`}>
           {isSmartMode && (
-            /* 智能描述模式 - 可滚动版 */
-            <div className="space-y-3 flex-1 flex flex-col animate-fadeIn overflow-hidden">
-              <label
-                htmlFor="custom-description"
-                className="block text-lg font-bold text-blue-600 drop-shadow-sm flex-shrink-0"
-              >
-                <span aria-hidden="true">🧠</span> 描述你的祝福需求
-              </label>
-              <div className="text-sm text-gray-600 bg-blue-50/50 p-3 rounded-xl border border-blue-200 flex-shrink-0">
-                💡 <strong>智能提示：</strong>
-                告诉我对象、关系、场景等信息，AI会生成个性化祝福
-              </div>
-              <textarea
-                id="custom-description"
-                className="w-full p-4 border-2 border-blue-300 rounded-2xl text-base resize-none transition-all duration-300 bg-gradient-to-br from-blue-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-600/20 placeholder-gray-500 flex-1 min-h-0 overflow-y-auto"
-                placeholder="🌟 例如：给室友小王发生日祝福，他是程序员，刚跳槽，性格内向但靠谱，认识10年了..."
-                value={options.customDescription || ""}
-                onChange={(e) =>
-                  onOptionsChange({
-                    ...options,
-                    customDescription: e.target.value,
-                  })
-                }
-              />
-            </div>
+            <SmartModeForm
+              options={options}
+              onOptionsChange={onOptionsChange}
+            />
           )}
         </div>
 
         <div className={`transition-all duration-500 ease-in-out flex-1 overflow-hidden ${!isSmartMode ? 'opacity-100' : 'opacity-0 max-h-0'}`}>
           {!isSmartMode && (
-            <div className="space-y-6 animate-fadeIn overflow-y-auto pr-2 h-full">
-              {/* 快速模板选择区域 */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* 祝福场合 */}
-                <div className="space-y-2">
-                  <label
-                    htmlFor="scenario-select"
-                    className="block text-sm font-bold text-red-600 drop-shadow-sm"
-                  >
-                    <span aria-hidden="true">🎉</span> 场合
-                  </label>
-                  <div className="relative">
-                    <select
-                      id="scenario-select"
-                      className="w-full px-3 py-2 border-2 border-yellow-400 rounded-xl text-sm transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-md hover:shadow-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/20 appearance-none"
-                      value={options.scenario}
-                      aria-label="选择祝福场合"
-                      onChange={(e) =>
-                        onOptionsChange({
-                          ...options,
-                          scenario: e.target.value,
-                          festival: "",
-                        })
-                      }
-                    >
-                      <option value="">选择场合</option>
-                      {occasions.map((occasion) => (
-                        <option key={occasion.value} value={occasion.value}>
-                          {occasion.label}
-                        </option>
-                      ))}
-                    </select>
-                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                      <svg
-                        className="w-4 h-4 text-gray-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 目标人群 */}
-                <div className="space-y-2">
-                  <label
-                    htmlFor="target-person-select"
-                    className="block text-sm font-bold text-red-600 drop-shadow-sm"
-                  >
-                    <span aria-hidden="true">👥</span> 对象
-                  </label>
-                  <div className="relative">
-                    <select
-                      id="target-person-select"
-                      className="w-full px-3 py-2 border-2 border-yellow-400 rounded-xl text-sm transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-md hover:shadow-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/20 appearance-none"
-                      value={options.targetPerson}
-                      aria-label="选择目标人群"
-                      onChange={(e) =>
-                        onOptionsChange({
-                          ...options,
-                          targetPerson: e.target.value,
-                        })
-                      }
-                    >
-                      <option value="">选择对象</option>
-                      {targetPersons.map((person) => (
-                        <option key={person.value} value={person.value}>
-                          {person.label}
-                        </option>
-                      ))}
-                    </select>
-                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                      <svg
-                        className="w-4 h-4 text-gray-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 祝福风格 */}
-                <div className="space-y-2">
-                  <label
-                    htmlFor="style-select"
-                    className="block text-sm font-bold text-red-600 drop-shadow-sm"
-                  >
-                    <span aria-hidden="true">🎨</span> 风格
-                  </label>
-                  <div className="relative">
-                    <select
-                      id="style-select"
-                      className="w-full px-3 py-2 border-2 border-yellow-400 rounded-xl text-sm transition-all duration-300 bg-gradient-to-r from-yellow-50 to-white shadow-md hover:shadow-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/20 appearance-none"
-                      value={options.style}
-                      aria-label="选择祝福风格"
-                      onChange={(e) =>
-                        onOptionsChange({ ...options, style: e.target.value })
-                      }
-                    >
-                      <option value="">选择风格</option>
-                      {styles.map((style) => (
-                        <option key={style.value} value={style.value}>
-                          {style.label}
-                        </option>
-                      ))}
-                    </select>
-                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                      <svg
-                        className="w-4 h-4 text-gray-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* 智能推荐 - 云朵式标签 */}
-              {allRecommendations.length > 0 && (
-                <div className="space-y-3 mt-4">
-                  <h3 className="text-sm font-bold text-purple-600 drop-shadow-sm">
-                    <span aria-hidden="true">🌟</span> 智能推荐
-                  </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {allRecommendations.slice(0, 6).map((recommendation) => (
-                      <button
-                        key={recommendation.id}
-                        type="button"
-                        onClick={() => applyRecommendation(recommendation)}
-                        className="group inline-flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-200 rounded-full text-xs font-medium text-gray-700 transition-all duration-200 hover:from-purple-200 hover:to-pink-200 hover:border-purple-300 hover:shadow-md hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-purple-400/30"
-                        title={recommendation.description}
-                      >
-                        <span className="group-hover:scale-110 transition-transform duration-200 flex-shrink-0">
-                          {recommendation.emoji}
-                        </span>
-                        <span className="truncate">
-                          {recommendation.scenario} · {recommendation.targetPerson} · {recommendation.style}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+            <TemplateModeForm
+              options={options}
+              onOptionsChange={onOptionsChange}
+            />
           )}
         </div>
 

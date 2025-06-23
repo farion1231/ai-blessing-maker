@@ -1,13 +1,12 @@
-// 重新导出所有配置，保持向后兼容性
-export { occasions, targetPersons, styles } from './config/occasions';
-export type { RecommendationItem } from './config/recommendations';
+export { occasions, targetPersons, styles } from './occasions';
+export type { RecommendationItem } from './recommendations';
 export { 
   popularCombinations, 
   getDateBasedRecommendations 
-} from './config/recommendations';
+} from './recommendations';
 
-// 兼容性导出
-import { occasions } from './config/occasions';
+// 兼容性导出 - 需要导入occasions进行处理
+import { occasions } from './occasions';
 
 export const scenarios = occasions.filter(item => 
   item.category === "人生时刻" || 
