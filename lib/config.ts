@@ -116,14 +116,14 @@ export const popularCombinations: RecommendationItem[] = [
     description: '职场必备祝福'
   },
   {
-    id: 'graduation-friend',
-    title: '毕业祝福',
-    scenario: '毕业',
+    id: 'wedding-family',
+    title: '婚礼祝福',
+    scenario: '婚礼',
     targetPerson: '朋友',
-    style: '诗意',
+    style: '正式',
     type: 'popular',
-    emoji: '🎓',
-    description: '青春记忆珍藏'
+    emoji: '💒',
+    description: '人生大事喜庆祝福'
   }
 ];
 

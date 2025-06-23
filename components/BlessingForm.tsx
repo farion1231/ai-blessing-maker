@@ -54,7 +54,7 @@ export default function BlessingForm({
   };
 
   return (
-    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-3xl shadow-xl border-2 border-yellow-400 p-6 relative overflow-hidden backdrop-blur-sm min-h-[480px] sm:min-h-[520px] md:min-h-[580px] lg:min-h-[620px] xl:min-h-[660px] flex flex-col transition-all duration-500 ease-in-out">
+    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 rounded-3xl shadow-xl border-2 border-yellow-400 p-6 relative overflow-hidden backdrop-blur-sm min-h-[400px] flex flex-col transition-all duration-500 ease-in-out">
       {/* 装饰元素 */}
       <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-yellow-200/30 to-orange-200/30 rounded-full blur-xl"></div>
 
@@ -269,50 +269,27 @@ export default function BlessingForm({
                 </div>
               </div>
 
-              {/* 智能推荐区域 */}
+              {/* 智能推荐 - 云朵式标签 */}
               {allRecommendations.length > 0 && (
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-lg font-bold text-purple-600 drop-shadow-sm">
-                      <span aria-hidden="true">🌟</span> 智能推荐
-                    </h3>
-                    <div className="h-px bg-gradient-to-r from-purple-300 to-transparent flex-1"></div>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                    {allRecommendations.slice(0, 4).map((recommendation) => (
+                <div className="space-y-3 mt-4">
+                  <h3 className="text-sm font-bold text-purple-600 drop-shadow-sm">
+                    <span aria-hidden="true">🌟</span> 智能推荐
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    {allRecommendations.slice(0, 6).map((recommendation) => (
                       <button
                         key={recommendation.id}
                         type="button"
                         onClick={() => applyRecommendation(recommendation)}
-                        className="group bg-gradient-to-br from-white to-purple-50 border-2 border-purple-200 rounded-xl p-3 text-left transition-all duration-300 hover:border-purple-400 hover:shadow-lg hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-purple-400/30"
+                        className="group inline-flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-200 rounded-full text-xs font-medium text-gray-700 transition-all duration-200 hover:from-purple-200 hover:to-pink-200 hover:border-purple-300 hover:shadow-md hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-purple-400/30"
+                        title={recommendation.description}
                       >
-                        <div className="flex items-start gap-2 mb-2">
-                          <span className="text-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                            {recommendation.emoji}
-                          </span>
-                          <div className="min-w-0 flex-1">
-                            <h4 className="font-semibold text-sm text-gray-800 truncate">
-                              {recommendation.title}
-                            </h4>
-                            {recommendation.type === 'date' && (
-                              <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium mt-1">
-                                <span>📅</span> 当前推荐
-                              </span>
-                            )}
-                            {recommendation.type === 'popular' && (
-                              <span className="inline-flex items-center gap-1 px-2 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium mt-1">
-                                <span>🔥</span> 热门
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <p className="text-xs text-gray-600 leading-relaxed">
-                          {recommendation.description}
-                        </p>
-                        <div className="mt-2 text-xs text-purple-600">
-                          点击应用 →
-                        </div>
+                        <span className="group-hover:scale-110 transition-transform duration-200 flex-shrink-0">
+                          {recommendation.emoji}
+                        </span>
+                        <span className="truncate">
+                          {recommendation.scenario} · {recommendation.targetPerson} · {recommendation.style}
+                        </span>
                       </button>
                     ))}
                   </div>
