@@ -1,8 +1,16 @@
 export interface BlessingOptions {
+  // 快速模板选项（保留向后兼容）
   scenario: string;
   festival: string;
   targetPerson: string;
   style?: string;
+  
+  // 新增：智能描述模式
+  customDescription?: string;  // 用户自由描述
+  recipientName?: string;      // 收礼人姓名
+  relationship?: string;       // 具体关系描述
+  context?: string;           // 背景情况
+  useSmartMode?: boolean;     // 是否启用智能模式
 }
 
 export async function generateBlessing(options: BlessingOptions): Promise<string> {

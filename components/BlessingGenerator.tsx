@@ -8,10 +8,16 @@ import ResultDisplay from './ResultDisplay'
 
 export default function BlessingGenerator() {
   const [options, setOptions] = useState<BlessingOptions>({
-    scenario: occasions[0].value,
+    scenario: "",
     festival: "",
-    targetPerson: targetPersons[0].value,
-    style: styles[0].value,
+    targetPerson: "",
+    style: "",
+    // 新增智能模式字段
+    customDescription: "",
+    recipientName: "",
+    relationship: "",
+    context: "",
+    useSmartMode: false,
   })
   
   const [blessing, setBlessing] = useState<string>('')
