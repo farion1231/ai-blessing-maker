@@ -6,19 +6,12 @@ import axios from "axios";
 import { generateBlessing } from "@/lib/ai-service";
 // 提示词模板生成器
 import { createBlessingPrompt } from "@/lib/prompt-templates";
-
-/**
- * API 请求体接口
- * 定义了前端发送的祝福语生成请求的数据结构
- */
-interface BlessingRequest {
-  scenario: string;           // 场景类型（经典模式）
-  festival: string;           // 节日类型（经典模式）
-  targetPerson: string;       // 目标人群（经典模式）
-  style?: string;             // 祝福语风格（可选）
-  customDescription?: string; // 自定义描述（智能模式）
-  useSmartMode?: boolean;     // 是否使用智能模式
-}
+// 安全验证和清理函数
+import { validateAndSanitizeInput, sanitizeText, getSafeErrorMessage, generateRequestFingerprint } from "@/lib/security";
+// 类型导入
+import { BlessingRequest } from "@/lib/types";
+// 日志和监控
+import { logger, apiMonitor } from "@/lib/logger";
 
 /**
  * 祝福语生成 API 路由处理函数
@@ -28,28 +21,79 @@ interface BlessingRequest {
  * @returns JSON 响应，包含生成的祝福语或错误信息
  */
 export async function POST(req: NextRequest) {
+  const startTime = Date.now();
+  
+  // 生成客户端标识
+  const clientId = generateRequestFingerprint(
+    req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown',
+    req.headers.get('user-agent') || 'unknown',
+    req.headers.get('accept-language'),
+    req.headers.get('accept-encoding')
+  );
+  
   try {
     // 解析请求体中的 JSON 数据
     const body: BlessingRequest = await req.json();
+    
+    // 记录请求
+    logger.info('API请求接收', {
+      clientId,
+      mode: body.mode || body.useSmartMode ? 'smart' : 'classic',
+      ip: req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip')
+    });
+    
+    // 验证和清理输入
+    const validation = validateAndSanitizeInput(body);
+    if (!validation.isValid) {
+      const duration = Date.now() - startTime;
+      logger.warn('请求验证失败', { clientId, error: validation.error, duration });
+      apiMonitor.track(clientId, duration, true);
+      
+      return NextResponse.json(
+        { error: validation.error },
+        { status: 400 }
+      );
+    }
+    
+    // 清理文本输入
+    if (body.customDescription) {
+      body.customDescription = sanitizeText(body.customDescription);
+    }
+    if (body.additionalInfo) {
+      body.additionalInfo = sanitizeText(body.additionalInfo);
+    }
     
     // 根据请求参数生成相应的 AI 提示词
     const prompt = createBlessingPrompt(body);
     
     // 调用 AI 服务生成祝福语
     const blessing = await generateBlessing(prompt);
+    
+    // 记录成功
+    const duration = Date.now() - startTime;
+    logger.info('祝福语生成成功', { clientId, duration });
+    apiMonitor.track(clientId, duration);
 
-    // 返回成功结果
-    return NextResponse.json({ blessing });
+    // 返回成功结果，添加安全响应头
+    const response = NextResponse.json({ blessing });
+    response.headers.set('X-Content-Type-Options', 'nosniff');
+    response.headers.set('X-Frame-Options', 'DENY');
+    response.headers.set('X-XSS-Protection', '1; mode=block');
+    response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+    
+    return response;
   } catch (error) {
-    // 记录错误信息用于调试
-    console.error("生成祝福语失败:", error);
+    const duration = Date.now() - startTime;
+    
+    // 记录错误
+    logger.error('生成祝福语失败', error instanceof Error ? error : new Error(String(error)), {
+      clientId,
+      duration
+    });
+    apiMonitor.track(clientId, duration, true);
 
-    // 根据错误类型生成相应的错误信息
-    const errorMessage = axios.isAxiosError(error)
-      ? error.response?.data?.error?.message || error.message || "生成祝福语失败，请稍后重试"
-      : error instanceof Error 
-        ? error.message 
-        : "生成祝福语失败，请稍后重试";
+    // 使用安全的错误信息，不暴露内部细节
+    const errorMessage = getSafeErrorMessage(error);
 
     // 返回错误响应
     return NextResponse.json({ error: errorMessage }, { status: 500 });
