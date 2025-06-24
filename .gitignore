@@ -43,3 +43,26 @@ pnpm-debug.log*
 /.claude/
 .claude/settings*
 CLAUDE.md
+
+# test scripts
+test-security.sh
+
+# IDE specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.history/
+*.code-workspace
+
+# OS specific files
+Thumbs.db
+.Spotlight-V100
+.Trashes
+
+# Editor backup files
+*.bak
+*.swp
+*.swo
+*~
+.#*
