@@ -21,8 +21,9 @@ describe('BlessingGenerator', () => {
   it('renders both form and result sections', () => {
     render(<BlessingGenerator />)
     
-    // Should have the form section
-    expect(screen.getByRole('button', { name: /快速生成/i })).toBeInTheDocument()
+    // Should have the form section with mode toggles
+    expect(screen.getByText('🎯 快速模板')).toBeInTheDocument()
+    expect(screen.getByText('💬 智能描述')).toBeInTheDocument()
     
     // Should have the result section (initially empty)
     expect(screen.getByText(/选择选项后点击生成按钮/i)).toBeInTheDocument()
@@ -42,7 +43,7 @@ describe('BlessingGenerator', () => {
     const textarea = screen.getByPlaceholderText(/例如：给室友小王发生日祝福/i)
     fireEvent.change(textarea, { target: { value: '生日祝福' } })
     
-    const submitButton = screen.getByRole('button', { name: /智能生成/i })
+    const submitButton = screen.getByRole('button', { name: /根据你的描述生成个性化祝福语/i })
     fireEvent.click(submitButton)
     
     // Should show loading state
@@ -67,11 +68,11 @@ describe('BlessingGenerator', () => {
     const textarea = screen.getByPlaceholderText(/例如：给室友小王发生日祝福/i)
     fireEvent.change(textarea, { target: { value: '生日祝福' } })
     
-    const submitButton = screen.getByRole('button', { name: /智能生成/i })
+    const submitButton = screen.getByRole('button', { name: /根据你的描述生成个性化祝福语/i })
     fireEvent.click(submitButton)
     
     await waitFor(() => {
-      expect(screen.getByText(/API错误/i)).toBeInTheDocument()
+      expect(screen.getByRole('alert')).toHaveTextContent(/API错误/i)
     })
   })
 
@@ -87,7 +88,7 @@ describe('BlessingGenerator', () => {
     const textarea = screen.getByPlaceholderText(/例如：给室友小王发生日祝福/i)
     fireEvent.change(textarea, { target: { value: '生日祝福' } })
     
-    const submitButton = screen.getByRole('button', { name: /智能生成/i })
+    const submitButton = screen.getByRole('button', { name: /根据你的描述生成个性化祝福语/i })
     fireEvent.click(submitButton)
     
     await waitFor(() => {
@@ -95,7 +96,7 @@ describe('BlessingGenerator', () => {
     })
     
     // Click copy button
-    const copyButton = screen.getByRole('button', { name: /复制祝福语/i })
+    const copyButton = screen.getByRole('button', { name: /复制生成的祝福语到剪贴板/i })
     fireEvent.click(copyButton)
     
     // Verify clipboard was called
@@ -121,7 +122,7 @@ describe('BlessingGenerator', () => {
     const textarea = screen.getByPlaceholderText(/例如：给室友小王发生日祝福/i)
     fireEvent.change(textarea, { target: { value: '生日祝福' } })
     
-    const submitButton = screen.getByRole('button', { name: /智能生成/i })
+    const submitButton = screen.getByRole('button', { name: /根据你的描述生成个性化祝福语/i })
     fireEvent.click(submitButton)
     
     await waitFor(() => {
@@ -129,12 +130,12 @@ describe('BlessingGenerator', () => {
     })
     
     // Click copy button
-    const copyButton = screen.getByRole('button', { name: /复制祝福语/i })
+    const copyButton = screen.getByRole('button', { name: /复制生成的祝福语到剪贴板/i })
     fireEvent.click(copyButton)
     
     // Should show error message
     await waitFor(() => {
-      expect(screen.getByText(/复制失败，请手动选择文字复制/i)).toBeInTheDocument()
+      expect(screen.getByRole('alert')).toHaveTextContent(/复制失败，请手动选择文字复制/i)
     })
   })
 
@@ -152,7 +153,7 @@ describe('BlessingGenerator', () => {
     const textarea = screen.getByPlaceholderText(/例如：给室友小王发生日祝福/i)
     fireEvent.change(textarea, { target: { value: '生日祝福' } })
     
-    const submitButton = screen.getByRole('button', { name: /智能生成/i })
+    const submitButton = screen.getByRole('button', { name: /根据你的描述生成个性化祝福语/i })
     fireEvent.click(submitButton)
     
     await waitFor(() => {
@@ -160,7 +161,7 @@ describe('BlessingGenerator', () => {
     })
     
     // Click regenerate
-    const regenerateButton = screen.getByRole('button', { name: /重新生成/i })
+    const regenerateButton = screen.getByRole('button', { name: /重新生成祝福语/i })
     fireEvent.click(regenerateButton)
     
     await waitFor(() => {
