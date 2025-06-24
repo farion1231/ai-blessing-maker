@@ -1,38 +1,59 @@
 "use client";
 
+// React 状态管理钩子
 import { useState } from "react";
+// 类型定义
 import { BlessingOptions } from "@/lib/api-client";
-import SmartModeForm from "./SmartModeForm";
-import TemplateModeForm from "./TemplateModeForm";
+// 子组件：两种不同的表单模式
+import SmartModeForm from "./SmartModeForm";     // 智能描述模式表单
+import TemplateModeForm from "./TemplateModeForm"; // 经典模板模式表单
 
+/**
+ * 祝福语表单组件属性接口
+ * 定义了组件所需的全部 props
+ */
 interface BlessingFormProps {
-  options: BlessingOptions;
-  loading: boolean;
-  onOptionsChange: (options: BlessingOptions) => void;
-  onSubmit: (e: React.FormEvent) => void;
+  options: BlessingOptions;                           // 当前的祝福语选项
+  loading: boolean;                                   // 是否正在加载中
+  onOptionsChange: (options: BlessingOptions) => void; // 选项变更回调函数
+  onSubmit: (e: React.FormEvent) => void;             // 表单提交回调函数
 }
 
+/**
+ * 祝福语表单组件
+ * 支持两种输入模式：经典模板选择和智能描述输入
+ * 包含模式切换、表单验证和提交功能
+ */
 export default function BlessingForm({
   options,
   loading,
   onOptionsChange,
   onSubmit,
 }: BlessingFormProps) {
+  // 当前模式状态（智能模式 vs 经典模式）
   const [isSmartMode, setIsSmartMode] = useState(options.useSmartMode || false);
 
+  /**
+   * 切换输入模式
+   * 在两种模式之间切换，并清空相应的表单数据
+   * @param useSmartMode - 是否使用智能模式
+   */
   const toggleMode = (useSmartMode: boolean) => {
     setIsSmartMode(useSmartMode);
     onOptionsChange({
       ...options,
       useSmartMode,
+      // 根据模式清空不同的字段
       ...(useSmartMode
         ? {
+            // 切换到智能模式时清空经典模式字段
             scenario: "",
             festival: "",
             targetPerson: "",
             style: "",
           }
         : {
+            // 切换到经典模式时清空智能模式字段
             customDescription: "",
           }),
     });

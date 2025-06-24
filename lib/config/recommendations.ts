@@ -1,14 +1,23 @@
+/**
+ * 推荐项目接口
+ * 定义了智能推荐功能中单个推荐项的数据结构
+ */
 export interface RecommendationItem {
-  id: string;
-  title: string;
-  scenario: string;
-  targetPerson: string;
-  style: string;
-  type: 'date' | 'popular';
-  description?: string;
-  emoji?: string;
+  id: string;              // 唯一标识符
+  title: string;           // 推荐项标题
+  scenario: string;        // 对应的场景类型
+  targetPerson: string;    // 对应的目标人群
+  style: string;           // 对应的祝福语风格
+  type: 'date' | 'popular'; // 推荐类型：日期相关或热门组合
+  description?: string;     // 可选的描述信息
+  emoji?: string;          // 可选的表情符号
 }
 
+/**
+ * 热门推荐组合列表
+ * 预定义的热门祝福场景组合，用于快速选择
+ * 按使用频率和实用性排序
+ */
 export const popularCombinations: RecommendationItem[] = [
   {
     id: 'birthday-friend',
