@@ -15,11 +15,11 @@ export default function SmartModeForm({
     <div className="space-y-3 flex-1 flex flex-col animate-fadeIn overflow-hidden">
       <label
         htmlFor="custom-description"
-        className="block text-lg font-bold text-blue-600 drop-shadow-sm flex-shrink-0"
+        className="block text-lg font-bold text-purple-600 drop-shadow-sm flex-shrink-0"
       >
         <span aria-hidden="true">🧠</span> 描述你的祝福需求
       </label>
-      <div className="text-sm text-gray-600 bg-blue-50/50 p-3 rounded-xl border border-blue-200 flex-shrink-0">
+      <div className="text-sm text-gray-600 bg-gradient-to-r from-purple-50 to-pink-50 p-3 rounded-xl border border-purple-200 flex-shrink-0">
         💡 <strong>智能提示：</strong>
         告诉我对象、关系、场景等信息，我会生成个性化祝福
       </div>

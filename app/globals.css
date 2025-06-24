@@ -82,7 +82,7 @@
   }
 
   .form-textarea {
-    @apply w-full p-4 border-2 border-blue-300 rounded-2xl text-base resize-none transition-all duration-300 bg-gradient-to-br from-blue-50 to-white shadow-lg hover:shadow-xl focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-600/20 placeholder-gray-500;
+    @apply w-full p-4 border-2 border-purple-300 rounded-2xl text-base resize-none transition-all duration-300 bg-gradient-to-br from-purple-50 to-pink-50 shadow-lg hover:shadow-xl focus:outline-none focus:border-purple-600 focus:ring-4 focus:ring-purple-600/20 placeholder-gray-500;
   }
 
   /* 标题组件 */
