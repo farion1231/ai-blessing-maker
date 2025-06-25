@@ -13,15 +13,18 @@ const BLOCKED_PATTERNS = [
   /javascript:/i
 ];
 
-export function validateInput(data: any): { valid: boolean; error?: string } {
+export function validateInput(data: unknown): { valid: boolean; error?: string } {
   // 空值检查
   if (!data) {
     return { valid: false, error: "请选择场合和对象" };
   }
   
+  // 类型断言
+  const inputData = data as Record<string, unknown>;
+  
   // 智能模式验证
-  if (data.useSmartMode || data.mode === 'smart') {
-    const desc = data.customDescription?.trim();
+  if (inputData.useSmartMode || inputData.mode === 'smart') {
+    const desc = (inputData.customDescription as string)?.trim();
     
     if (!desc) return { valid: false, error: "请输入场景描述" };
     if (desc.length < LIMITS.customDescription.min) {
@@ -39,7 +42,7 @@ export function validateInput(data: any): { valid: boolean; error?: string } {
   
   // 经典模式验证（简单非空检查）
   else {
-    if (!data.scenario || !data.targetPerson) {
+    if (!inputData.scenario || !inputData.targetPerson) {
       return { valid: false, error: "请选择场合和对象" };
     }
   }

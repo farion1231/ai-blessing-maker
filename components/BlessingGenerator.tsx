@@ -2,8 +2,7 @@
 
 // React 状态管理 Hook
 import { useState } from 'react'
-// 业务配置数据（场景、人群、风格）
-import { occasions, targetPersons, styles } from '@/lib/config'
+// 业务配置数据（场景、人群、风格） - 这些导入在表单组件中使用
 // API 调用函数和类型定义
 import { generateBlessing, BlessingOptions } from '@/lib/api-client'
 // 子组件导入

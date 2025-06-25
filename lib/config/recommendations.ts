@@ -64,7 +64,8 @@ export const popularCombinations: RecommendationItem[] = [
 export function getDateBasedRecommendations(): RecommendationItem[] {
   const now = new Date();
   const month = now.getMonth() + 1;
-  const day = now.getDate();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const day = now.getDate(); // 保留以备将来日期匹配使用
   const recommendations: RecommendationItem[] = [];
 
   // 端午节推荐 (农历五月初五，大概在公历6月)
