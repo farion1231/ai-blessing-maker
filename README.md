@@ -1,26 +1,33 @@
 # 🎊 AI祝福语生成器
 
-基于 Next.js 14 + TypeScript 构建的智能祝福语生成应用，支持多AI供应商切换，为不同场景和节日生成个性化祝福语。
+基于 Next.js 15 + TypeScript 构建的**生产级别**智能祝福语生成应用，支持多AI供应商切换，为不同场景和节日生成个性化祝福语。
 
-## ✨ 主要功能
+## ✨ 核心功能
 
-- **多场景支持**：生日、婚礼、毕业、升职等12种生活场景
+### 🎯 智能生成模式
+- **双模式支持**：智能模式（自由输入）+ 模板模式（预设场景）
+- **多场景覆盖**：生日、婚礼、毕业、升职等12种生活场景
 - **节日主题**：春节、中秋、圣诞节等16个传统和现代节日
 - **目标人群定制**：朋友、家人、同事、恋人等15种关系类型
 - **风格多样化**：温馨、正式、幽默、诗意等7种表达风格
-- **响应式设计**：完美适配桌面端和移动端
-- **一键复制**：生成后可直接复制分享
-- **实时生成**：基于AI的即时祝福语创作
-- **无障碍支持**：符合 WCAG 2.1 AA 标准，支持屏幕阅读器和键盘导航
+
+### 🛡️ 企业级特性  
+- **高可用性**：主力+备用AI故障转移机制
+- **安全防护**：智能速率限制、输入验证、XSS防护
+- **无障碍支持**：符合 WCAG 2.1 AA 标准，完整键盘导航
+- **性能优化**：Edge Runtime、客户端缓存、响应式设计
+- **智能推荐**：基于时间和场景的个性化推荐
 
 ## 🚀 技术栈
 
-- **前端框架**：Next.js 14 with App Router
-- **开发语言**：TypeScript
-- **样式框架**：Tailwind CSS
+- **前端框架**：Next.js 15.3.4 with App Router
+- **开发语言**：TypeScript 5.7.2（strict模式）
+- **样式框架**：Tailwind CSS 3.4.17
+- **HTTP客户端**：Axios 1.7.9
+- **测试框架**：Jest 30 + React Testing Library 16
 - **多AI支持**：支持 DeepSeek、OpenAI、通义千问、文心一言、Kimi 等
-- **包管理器**：pnpm
-- **部署平台**：支持 Vercel、Netlify 等
+- **包管理器**：pnpm 8+
+- **部署平台**：Vercel、Netlify 等 Edge Runtime 环境
 
 ## 🛠️ 本地开发
 
@@ -73,22 +80,46 @@ pnpm build
 pnpm start
 ```
 
-## 📁 项目结构
+## 📁 项目架构
 
 ```
 ai-blessing-maker/
-├── app/                    # Next.js App Router
-│   ├── api/blessing/      # API 路由
-│   ├── layout.tsx         # 根布局
-│   ├── page.tsx          # 首页
-│   └── globals.css       # 全局样式
-├── components/           # React 组件
-│   └── BlessingGenerator.tsx
-├── lib/                 # 工具函数
-│   ├── api-client.ts    # API 客户端
-│   └── config.ts        # 配置选项
-└── public/             # 静态资源
+├── app/                      # Next.js 15 App Router
+│   ├── api/blessing/        # API 路由 (Edge Runtime)
+│   ├── layout.tsx           # 根布局 (无障碍优化)
+│   ├── page.tsx            # 首页组件
+│   └── globals.css         # Tailwind 全局样式
+├── components/             # React 组件库 (10个组件)
+│   ├── BlessingGenerator.tsx  # 主生成器组件
+│   ├── SmartModeForm.tsx     # 智能模式表单
+│   ├── TemplateModeForm.tsx  # 模板模式表单
+│   ├── BlessingResult.tsx    # 结果展示组件
+│   └── ...                   # 其他UI组件
+├── lib/                    # 核心工具库
+│   ├── ai-service.ts       # AI服务抽象层
+│   ├── config/             # 配置管理模块
+│   │   ├── index.ts        # 主配置导出
+│   │   ├── occasions.ts    # 场景和节日配置
+│   │   └── recommendations.ts # 智能推荐配置
+│   ├── prompt-templates.ts # AI提示词模板
+│   ├── validation.ts       # 输入验证和安全过滤
+│   └── api-client.ts       # HTTP客户端封装
+├── __tests__/              # 完整测试套件 (17个测试文件)
+│   ├── api/                # API集成测试
+│   ├── components/         # 组件单元测试 
+│   └── lib/                # 工具函数测试
+├── middleware.ts           # 安全中间件 (速率限制)
+├── next.config.js          # Next.js配置 (安全响应头)
+└── public/                 # 静态资源
 ```
+
+### 🏗️ 架构特点
+
+- **模块化设计**：清晰的关注点分离，每个模块职责单一
+- **配置驱动**：业务逻辑通过配置文件管理，易于扩展
+- **类型安全**：全量TypeScript覆盖，strict模式开发
+- **测试完备**：17个测试文件，覆盖API、组件、工具函数
+- **安全优先**：多层安全防护，从中间件到输入验证
 
 ## 🎯 使用方式
 
@@ -99,22 +130,59 @@ ai-blessing-maker/
 5. **生成祝福**：点击按钮即可获得个性化祝福语
 6. **复制分享**：一键复制到剪贴板，便于分享
 
+## 🧪 测试套件
+
+项目包含**完整的测试覆盖**，确保代码质量和功能稳定性：
+
+```bash
+# 运行所有测试
+pnpm test
+
+# 监视模式开发
+pnpm test:watch
+
+# 生成覆盖率报告
+pnpm test:coverage
+```
+
+### 测试架构
+- **API测试**：完整的端到端API测试，包含错误处理
+- **组件测试**：所有UI组件的交互测试和无障碍测试
+- **工具函数测试**：核心业务逻辑的单元测试
+- **集成测试**：多组件协作的集成场景测试
+
+### 测试覆盖
+- **17个测试文件**，覆盖项目核心功能
+- **完整的边界情况**测试
+- **无障碍功能**专项测试
+- **AI服务故障转移**测试
+
 ## 🔧 自定义配置
 
 ### 添加新场景
-
-在 `lib/config.ts` 中的 `scenarios` 数组添加新选项：
+在 `lib/config/occasions.ts` 中添加新的场景配置：
 
 ```typescript
 {
   value: 'your-scenario',
-  label: '🎯 你的场景'
+  label: '🎯 你的场景',
+  description: '场景描述'
 }
 ```
 
-### 修改AI提示词
+### 添加新AI供应商
+在 `lib/ai-service.ts` 中扩展AI服务配置：
 
-在 `app/api/blessing/route.ts` 中修改 `createBlessingPrompt` 函数。
+```typescript
+// 添加新的AI服务商配置
+const newProvider = {
+  baseURL: 'https://api.newprovider.com/v1',
+  model: 'new-model-name'
+}
+```
+
+### 修改推荐逻辑
+在 `lib/config/recommendations.ts` 中自定义智能推荐算法。
 
 ## 🔄 多AI供应商支持
 
@@ -188,14 +256,44 @@ PRIMARY_AI_MODEL=moonshot-v1-8k
 - `↑` / `↓`：在下拉选项中导航
 - `Esc`：关闭弹出内容（如适用）
 
-## 📝 开发说明
+## 🔐 安全特性
 
-- 项目使用 App Router 架构，支持服务端渲染
-- API 路由位于 `app/api` 目录
-- 组件采用客户端渲染，支持交互功能
-- 样式使用 Tailwind CSS，响应式设计
-- 已优化页面性能，解决了布局抖动问题
-- **无障碍优先**：开发过程中始终考虑可访问性
+### 多层安全防护
+
+**中间件层安全 (middleware.ts)**
+- **智能速率限制**：每分钟8次，每天50次请求限制
+- **IP级别控制**：基于真实IP进行限流统计
+- **内存优化**：自动清理过期记录，防止内存泄漏
+- **Edge Runtime兼容**：适配边缘计算环境
+
+**输入验证安全 (lib/validation.ts)**
+- **长度检查**：防止过长输入导致的性能问题
+- **内容过滤**：危险词汇和恶意内容检测
+- **文本清理**：输入标准化和特殊字符处理
+
+**HTTP安全响应头 (next.config.js)**
+- `X-Content-Type-Options: nosniff`：防止MIME类型嗅探攻击
+- `X-Frame-Options: SAMEORIGIN`：防止点击劫持攻击
+- `X-XSS-Protection: 1; mode=block`：内置XSS保护
+
+### API安全设计
+- **故障转移机制**：主力API失败自动切换备用API
+- **请求验证**：严格的参数校验和类型检查
+- **错误处理**：安全的错误信息返回，避免信息泄露
+
+## 📈 性能优化
+
+### 运行时优化
+- **Edge Runtime**：API路由使用边缘计算，降低延迟
+- **客户端缓存**：合理的浏览器缓存策略
+- **代码分割**：按需加载，减少初始包体积
+- **图片优化**：Next.js内置图片优化
+
+### 开发体验优化
+- **热重载**：开发环境快速反馈
+- **类型检查**：编译时错误捕获
+- **ESLint**：代码质量保证
+- **测试覆盖**：持续集成质量保证
 
 ## 🚀 部署
 
