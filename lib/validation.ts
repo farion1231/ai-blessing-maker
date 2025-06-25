@@ -14,6 +14,11 @@ const BLOCKED_PATTERNS = [
 ];
 
 export function validateInput(data: any): { valid: boolean; error?: string } {
+  // 空值检查
+  if (!data) {
+    return { valid: false, error: "请选择场合和对象" };
+  }
+  
   // 智能模式验证
   if (data.useSmartMode || data.mode === 'smart') {
     const desc = data.customDescription?.trim();
