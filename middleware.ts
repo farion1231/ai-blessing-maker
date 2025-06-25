@@ -15,6 +15,36 @@ const requestLog = new Map<string, {
   dailyReset: number 
 }>();
 
+// 改进的清理机制
+const CLEANUP_CONFIG = {
+  maxSize: 300,         // 降低触发清理的阈值
+  cleanupInterval: 5 * 60 * 1000, // 5分钟定期清理
+  batchSize: 100        // 每次清理的批次大小
+};
+
+let lastCleanup = 0;
+
+// 主动清理过期条目
+function cleanupExpiredEntries(now: number) {
+  if (requestLog.size < CLEANUP_CONFIG.maxSize && 
+      now - lastCleanup < CLEANUP_CONFIG.cleanupInterval) {
+    return;
+  }
+  
+  let cleaned = 0;
+  const entries = Array.from(requestLog.entries());
+  
+  for (const [key, data] of entries) {
+    if (now > data.resetTime && now > data.dailyReset) {
+      requestLog.delete(key);
+      cleaned++;
+      if (cleaned >= CLEANUP_CONFIG.batchSize) break;
+    }
+  }
+  
+  lastCleanup = now;
+}
+
 export function middleware(req: NextRequest) {
   // 只对祝福API限流
   if (!req.nextUrl.pathname.startsWith("/api/blessing")) {
@@ -64,13 +94,8 @@ export function middleware(req: NextRequest) {
   record.dailyCount++;
   requestLog.set(ip, record);
   
-  // 简单清理（只在Map过大时）
-  if (requestLog.size > 1000) {
-    const oldEntries = Array.from(requestLog.entries())
-      .filter(([_, data]) => now > data.resetTime)
-      .slice(0, 500);
-    oldEntries.forEach(([key]) => requestLog.delete(key));
-  }
+  // 使用改进的清理机制
+  cleanupExpiredEntries(now);
   
   return NextResponse.next();
 }
