@@ -6,6 +6,8 @@ import axios from "axios";
 import { generateBlessing } from "@/lib/ai-service";
 // 提示词模板生成器
 import { createBlessingPrompt } from "@/lib/prompt-templates";
+// 输入验证和清理函数
+import { validateInput, cleanText } from "@/lib/validation";
 
 /**
  * API 请求体接口
@@ -32,6 +34,20 @@ export async function POST(req: NextRequest) {
     // 解析请求体中的 JSON 数据
     const body: BlessingRequest = await req.json();
     
+    // 基础验证
+    const validation = validateInput(body);
+    if (!validation.valid) {
+      return NextResponse.json(
+        { error: validation.error },
+        { status: 400 }
+      );
+    }
+    
+    // 清理输入
+    if (body.customDescription) {
+      body.customDescription = cleanText(body.customDescription);
+    }
+    
     // 根据请求参数生成相应的 AI 提示词
     const prompt = createBlessingPrompt(body);
     
@@ -44,12 +60,10 @@ export async function POST(req: NextRequest) {
     // 记录错误信息用于调试
     console.error("生成祝福语失败:", error);
 
-    // 根据错误类型生成相应的错误信息
-    const errorMessage = axios.isAxiosError(error)
-      ? error.response?.data?.error?.message || error.message || "生成祝福语失败，请稍后重试"
-      : error instanceof Error 
-        ? error.message 
-        : "生成祝福语失败，请稍后重试";
+    // 简化错误处理
+    const errorMessage = error instanceof Error && error.message.includes('429')
+      ? "请求太频繁，请稍后再试"
+      : "生成失败，请重试";
 
     // 返回错误响应
     return NextResponse.json({ error: errorMessage }, { status: 500 });
