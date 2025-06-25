@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { headers } from "next/headers";
 
 // 速率限制配置
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1分钟
@@ -16,19 +17,18 @@ const requestCounts = new Map<
   }
 >();
 
-// 清理过期记录的函数
-function cleanupExpiredRecords() {
+// 清理过期记录
+setInterval(() => {
   const now = Date.now();
   for (const [key, value] of requestCounts.entries()) {
-    // 清理超过分钟窗口且超过日重置时间的记录
     if (
-      now - value.firstRequest > RATE_LIMIT_WINDOW ||
-      now >= value.dailyReset
+      now - value.firstRequest > RATE_LIMIT_WINDOW &&
+      now > value.dailyReset
     ) {
       requestCounts.delete(key);
     }
   }
-}
+}, 60 * 1000); // 每分钟清理一次
 
 function getClientIdentifier(req: NextRequest): string {
   // 获取真实IP（考虑代理）
@@ -52,13 +52,8 @@ export function middleware(req: NextRequest) {
 
   const identifier = getClientIdentifier(req);
   const now = Date.now();
-  // 使用UTC时间避免时区问题
-  const today = new Date();
-  const todayStart = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+  const todayStart = new Date().setHours(0, 0, 0, 0);
   const tomorrowStart = todayStart + 24 * 60 * 60 * 1000;
-
-  // 清理过期记录（在每次请求时被动清理）
-  cleanupExpiredRecords();
 
   // 获取或创建请求记录
   let record = requestCounts.get(identifier);
