@@ -55,7 +55,7 @@ describe('RecommendationTags', () => {
       />
     )
     
-    expect(screen.getByText('🌟 智能推荐')).toBeInTheDocument()
+    expect(screen.getByText('智能推荐')).toBeInTheDocument()
     expect(screen.getByText('生日 · 朋友 · 温馨')).toBeInTheDocument()
     expect(screen.getByText('结婚 · 同事 · 正式')).toBeInTheDocument()
     expect(screen.getByText('升职 · 老板 · 恭敬')).toBeInTheDocument()

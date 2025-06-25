@@ -60,10 +60,19 @@ export async function POST(req: NextRequest) {
     // 记录错误信息用于调试
     console.error("生成祝福语失败:", error);
 
-    // 简化错误处理
-    const errorMessage = error instanceof Error && error.message.includes('429')
-      ? "请求太频繁，请稍后再试"
-      : "生成失败，请重试";
+    // 安全的错误处理 - 只返回用户友好的消息
+    let errorMessage = "生成失败，请重试";
+    
+    // 处理特定的已知错误类型
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 429) {
+        errorMessage = "请求太频繁，请稍后再试";
+      } else if (error.response?.status === 401 || error.response?.status === 403) {
+        errorMessage = "服务暂时不可用";
+      }
+    } else if (error instanceof Error && error.message.includes('429')) {
+      errorMessage = "请求太频繁，请稍后再试";
+    }
 
     // 返回错误响应
     return NextResponse.json({ error: errorMessage }, { status: 500 });

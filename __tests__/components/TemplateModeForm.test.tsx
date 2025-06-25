@@ -143,7 +143,7 @@ describe('TemplateModeForm', () => {
     // Check if recommendation tags component is rendered (it might not show if no recommendations)
     const recommendationButton = screen.queryByText('生日 · 朋友 · 温馨')
     if (recommendationButton) {
-      expect(screen.getByText('🌟 智能推荐')).toBeInTheDocument()
+      expect(screen.getByText('智能推荐')).toBeInTheDocument()
       expect(recommendationButton).toBeInTheDocument()
     }
   })

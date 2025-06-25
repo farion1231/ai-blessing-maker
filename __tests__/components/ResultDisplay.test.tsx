@@ -30,7 +30,7 @@ describe('ResultDisplay', () => {
   it('renders title correctly', () => {
     render(<ResultDisplay {...defaultProps} />)
     
-    expect(screen.getByText('🎉 生成结果 🎉')).toBeInTheDocument()
+    expect(screen.getByText('生成结果')).toBeInTheDocument()
   })
 
   it('shows empty state when no blessing is available', () => {
@@ -121,7 +121,7 @@ describe('ResultDisplay', () => {
       />
     )
     
-    const successMessage = screen.getByText(/祝福语已复制到剪贴板！快去分享这份温暖吧~/).parentElement
+    const successMessage = screen.getByText(/祝福语已复制到剪贴板！快去分享这份温暖吧~/).closest('.fade-in')
     expect(successMessage).toHaveClass('fade-in')
   })
 
@@ -135,7 +135,7 @@ describe('ResultDisplay', () => {
       />
     )
     
-    const successMessage = screen.getByText(/祝福语已复制到剪贴板！快去分享这份温暖吧~/).parentElement
+    const successMessage = screen.getByText(/祝福语已复制到剪贴板！快去分享这份温暖吧~/).closest('.fade-out')
     expect(successMessage).toHaveClass('fade-out')
   })
 

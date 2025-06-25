@@ -2,10 +2,14 @@ import { POST } from '@/app/api/blessing/route'
 import { NextRequest } from 'next/server'
 import * as aiService from '@/lib/ai-service'
 import * as promptTemplates from '@/lib/prompt-templates'
+import axios from 'axios'
 
 // Mock dependencies
 jest.mock('@/lib/ai-service')
 jest.mock('@/lib/prompt-templates')
+jest.mock('axios', () => ({
+  isAxiosError: jest.fn()
+}))
 
 const mockGenerateBlessing = aiService.generateBlessing as jest.MockedFunction<
   typeof aiService.generateBlessing
@@ -15,9 +19,13 @@ const mockCreateBlessingPrompt = promptTemplates.createBlessingPrompt as jest.Mo
   typeof promptTemplates.createBlessingPrompt
 >
 
+const mockIsAxiosError = axios.isAxiosError as jest.MockedFunction<typeof axios.isAxiosError>
+
 describe('/api/blessing', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    // Reset axios.isAxiosError to default behavior
+    mockIsAxiosError.mockReturnValue(false)
   })
 
   it('successfully generates blessing with smart mode', async () => {
@@ -98,10 +106,10 @@ describe('/api/blessing', () => {
     const responseData = await response.json()
 
     expect(response.status).toBe(500)
-    expect(responseData).toEqual({ error: 'AI服务暂时不可用' })
+    expect(responseData).toEqual({ error: '生成失败，请重试' })
   })
 
-  it('handles axios errors with custom error messages', async () => {
+  it('handles axios 429 errors with rate limit message', async () => {
     const requestBody = {
       scenario: 'birthday',
       festival: '',
@@ -113,19 +121,18 @@ describe('/api/blessing', () => {
     const axiosError = {
       isAxiosError: true,
       response: {
+        status: 429,
         data: {
           error: {
-            message: 'API配额已用完'
+            message: 'Rate limit exceeded'
           }
         }
       },
       message: 'Request failed'
     }
 
-    // Mock axios.isAxiosError
-    jest.doMock('axios', () => ({
-      isAxiosError: jest.fn().mockReturnValue(true)
-    }))
+    // Mock axios.isAxiosError to return true
+    mockIsAxiosError.mockReturnValue(true)
 
     mockCreateBlessingPrompt.mockReturnValue(mockPrompt)
     mockGenerateBlessing.mockRejectedValue(axiosError)
@@ -138,10 +145,10 @@ describe('/api/blessing', () => {
     const responseData = await response.json()
 
     expect(response.status).toBe(500)
-    expect(responseData.error).toBe('API配额已用完')
+    expect(responseData.error).toBe('请求太频繁，请稍后再试')
   })
 
-  it('handles generic axios errors', async () => {
+  it('handles generic axios errors with default message', async () => {
     const requestBody = {
       scenario: 'birthday',
       festival: '',
@@ -152,12 +159,14 @@ describe('/api/blessing', () => {
     const mockPrompt = '请生成生日祝福语'
     const axiosError = {
       isAxiosError: true,
+      response: {
+        status: 500
+      },
       message: '网络连接失败'
     }
 
-    jest.doMock('axios', () => ({
-      isAxiosError: jest.fn().mockReturnValue(true)
-    }))
+    // Mock axios.isAxiosError to return true
+    mockIsAxiosError.mockReturnValue(true)
 
     mockCreateBlessingPrompt.mockReturnValue(mockPrompt)
     mockGenerateBlessing.mockRejectedValue(axiosError)
@@ -170,7 +179,7 @@ describe('/api/blessing', () => {
     const responseData = await response.json()
 
     expect(response.status).toBe(500)
-    expect(responseData.error).toBe('网络连接失败')
+    expect(responseData.error).toBe('生成失败，请重试')
   })
 
   it('handles request parsing errors', async () => {
@@ -182,7 +191,7 @@ describe('/api/blessing', () => {
     const responseData = await response.json()
 
     expect(response.status).toBe(500)
-    expect(responseData.error).toBe('Invalid JSON')
+    expect(responseData.error).toBe('生成失败，请重试')
   })
 
   it('logs errors to console', async () => {
