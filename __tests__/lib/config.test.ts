@@ -61,6 +61,10 @@ describe('config', () => {
       expect(values).toContain('朋友')
       expect(values).toContain('家人')
       expect(values).toContain('同事')
+      expect(values).toContain('爸爸')
+      expect(values).toContain('妈妈')
+      expect(values).toContain('爷爷')
+      expect(values).toContain('奶奶')
     })
   })
 
@@ -83,6 +87,8 @@ describe('config', () => {
       expect(values).toContain('温馨')
       expect(values).toContain('正式')
       expect(values).toContain('幽默')
+      expect(values).toContain('感恩')
+      expect(values).toContain('激励')
     })
   })
 
@@ -130,17 +136,31 @@ describe('config', () => {
 
   describe('getDateBasedRecommendations', () => {
     it('should return recommendations for spring festival period', () => {
-      // Mock date to be around Spring Festival (February)
-      const mockDate = new Date('2024-02-10')
+      // Mock Date constructor to return February 10th
+      const originalDate = global.Date
+      global.Date = jest.fn(() => new originalDate('2024-02-10')) as any
+      global.Date.now = originalDate.now
+      global.Date.parse = originalDate.parse
+      global.Date.UTC = originalDate.UTC
+      global.Date.prototype = originalDate.prototype
       
-      const recommendations = getDateBasedRecommendations(mockDate)
+      const recommendations = getDateBasedRecommendations()
       
       expect(Array.isArray(recommendations)).toBe(true)
       expect(recommendations.length).toBeGreaterThan(0)
       
-      // Should include spring festival related recommendations (February doesn't have specific recommendations in current implementation)
-      // Just check that we get some recommendations
-      expect(recommendations.length).toBeGreaterThan(0)
+      // Should include spring festival and valentine's day recommendations
+      const hasSpringFestival = recommendations.some(r => 
+        r.scenario === '春节'
+      )
+      const hasValentinesDay = recommendations.some(r => 
+        r.scenario === '情人节'
+      )
+      expect(hasSpringFestival).toBe(true)
+      expect(hasValentinesDay).toBe(true)
+      
+      // Restore original Date
+      global.Date = originalDate
     })
 
     it('should return recommendations for National Day period', () => {
@@ -157,20 +177,24 @@ describe('config', () => {
       expect(Array.isArray(recommendations)).toBe(true)
       expect(recommendations.length).toBeGreaterThan(0)
       
-      // Should include national day related recommendations
+      // Should include national day and chongyang festival recommendations
       const hasNationalDay = recommendations.some(r => 
         r.scenario === '国庆节'
       )
+      const hasChongyangFestival = recommendations.some(r => 
+        r.scenario === '重阳节'
+      )
       expect(hasNationalDay).toBe(true)
+      expect(hasChongyangFestival).toBe(true)
       
       // Restore original Date
       global.Date = originalDate
     })
 
-    it('should return general recommendations for regular days', () => {
-      // Mock Date constructor to return May 15th (regular day, weekday)
+    it('should return recommendations for Mother\'s Day period', () => {
+      // Mock Date constructor to return May 12th (Mother's Day period)
       const originalDate = global.Date
-      global.Date = jest.fn(() => new originalDate('2024-05-15')) as any
+      global.Date = jest.fn(() => new originalDate('2024-05-12')) as any
       global.Date.now = originalDate.now
       global.Date.parse = originalDate.parse
       global.Date.UTC = originalDate.UTC
@@ -179,8 +203,37 @@ describe('config', () => {
       const recommendations = getDateBasedRecommendations()
       
       expect(Array.isArray(recommendations)).toBe(true)
-      // May 15th should have no special recommendations, expect empty array
-      expect(recommendations.length).toBe(0)
+      expect(recommendations.length).toBeGreaterThan(0)
+      
+      // Should include Mother's Day and Labor Day recommendations
+      const hasMothersDay = recommendations.some(r => 
+        r.scenario === '母亲节'
+      )
+      expect(hasMothersDay).toBe(true)
+      
+      // Restore original Date
+      global.Date = originalDate
+    })
+
+    it('should return weekend recommendations', () => {
+      // Mock Date constructor to return Saturday
+      const originalDate = global.Date
+      global.Date = jest.fn(() => new originalDate('2024-06-15')) as any // Saturday
+      global.Date.now = originalDate.now
+      global.Date.parse = originalDate.parse
+      global.Date.UTC = originalDate.UTC
+      global.Date.prototype = originalDate.prototype
+      
+      const recommendations = getDateBasedRecommendations()
+      
+      expect(Array.isArray(recommendations)).toBe(true)
+      expect(recommendations.length).toBeGreaterThan(0)
+      
+      // Should include weekend greeting
+      const hasWeekendGreeting = recommendations.some(r => 
+        r.id === 'weekend-greeting'
+      )
+      expect(hasWeekendGreeting).toBe(true)
       
       // Restore original Date
       global.Date = originalDate
