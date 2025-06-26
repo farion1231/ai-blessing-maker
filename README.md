@@ -1,19 +1,21 @@
-# 🎊 AI祝福语生成器
+# 🎊 AI 祝福语生成器
 
-基于 Next.js 15 + TypeScript 构建的智能祝福语生成应用，支持多AI供应商切换，为不同场景和节日生成个性化祝福语。
+基于 Next.js 15 + TypeScript 构建的智能祝福语生成应用，支持多 AI 供应商切换，为不同场景和节日生成个性化祝福语。
 
 ## ✨ 核心功能
 
 ### 🎯 智能生成模式
-- **双模式支持**：智能模式（自由输入）+ 模板模式（预设场景）
-- **多场景覆盖**：生日、婚礼、毕业、升职等12种生活场景
-- **节日主题**：春节、中秋、圣诞节等16个传统和现代节日
-- **目标人群定制**：朋友、家人、同事、恋人等15种关系类型
-- **风格多样化**：温馨、正式、幽默、诗意等7种表达风格
 
-### 🛡️ 企业级特性  
-- **高可用性**：主力+备用AI故障转移机制
-- **安全防护**：智能速率限制、输入验证、XSS防护
+- **双模式支持**：智能模式（自由输入）+ 模板模式（预设场景）
+- **多场景覆盖**：生日、婚礼、毕业、升职等 12 种生活场景
+- **节日主题**：春节、中秋、圣诞节等 16 个传统和现代节日
+- **目标人群定制**：朋友、家人、同事、恋人等 15 种关系类型
+- **风格多样化**：温馨、正式、幽默、诗意等 7 种表达风格
+
+### 🛡️ 企业级特性
+
+- **高可用性**：主力+备用 AI 故障转移机制
+- **安全防护**：智能速率限制、输入验证、XSS 防护
 - **无障碍支持**：符合 WCAG 2.1 AA 标准，完整键盘导航
 - **性能优化**：Edge Runtime、客户端缓存、响应式设计
 - **智能推荐**：基于时间和场景的个性化推荐
@@ -21,11 +23,11 @@
 ## 🚀 技术栈
 
 - **前端框架**：Next.js 15.3.4 with App Router
-- **开发语言**：TypeScript 5.7.2（strict模式）
+- **开发语言**：TypeScript 5.7.2（strict 模式）
 - **样式框架**：Tailwind CSS 3.4.17
-- **HTTP客户端**：Axios 1.7.9
+- **HTTP 客户端**：Axios 1.7.9
 - **测试框架**：Jest 30 + React Testing Library 16
-- **多AI支持**：支持 DeepSeek、OpenAI、通义千问、文心一言、Kimi 等
+- **多 AI 支持**：支持 DeepSeek、OpenAI、豆包、通义千问、文心一言、Kimi 等
 - **包管理器**：pnpm 8+
 - **部署平台**：Vercel、Netlify 等 Edge Runtime 环境
 
@@ -33,7 +35,7 @@
 
 ### 环境要求
 
-- Node.js 18+ 
+- Node.js 18+
 - pnpm 8+
 
 ### 安装依赖
@@ -45,11 +47,13 @@ pnpm install
 ### 环境配置
 
 1. 复制环境变量模板：
+
 ```bash
 cp .env.example .env.local
 ```
 
-2. 配置 AI API（必填主力API，可选备用API）：
+2. 配置 AI API（必填主力 API，可选备用 API）：
+
 ```env
 # 主力AI API（必需）
 PRIMARY_AI_API_KEY=sk-xxxxx
@@ -106,7 +110,7 @@ ai-blessing-maker/
 │   └── api-client.ts       # HTTP客户端封装
 ├── __tests__/              # 完整测试套件 (17个测试文件)
 │   ├── api/                # API集成测试
-│   ├── components/         # 组件单元测试 
+│   ├── components/         # 组件单元测试
 │   └── lib/                # 工具函数测试
 ├── middleware.ts           # 安全中间件 (速率限制)
 ├── next.config.js          # Next.js配置 (安全响应头)
@@ -117,8 +121,8 @@ ai-blessing-maker/
 
 - **模块化设计**：清晰的关注点分离，每个模块职责单一
 - **配置驱动**：业务逻辑通过配置文件管理，易于扩展
-- **类型安全**：全量TypeScript覆盖，strict模式开发
-- **测试完备**：17个测试文件，覆盖API、组件、工具函数
+- **类型安全**：全量 TypeScript 覆盖，strict 模式开发
+- **测试完备**：17 个测试文件，覆盖 API、组件、工具函数
 - **安全优先**：多层安全防护，从中间件到输入验证
 
 ## 🎯 使用方式
@@ -146,20 +150,23 @@ pnpm test:coverage
 ```
 
 ### 测试架构
-- **API测试**：完整的端到端API测试，包含错误处理
-- **组件测试**：所有UI组件的交互测试和无障碍测试
+
+- **API 测试**：完整的端到端 API 测试，包含错误处理
+- **组件测试**：所有 UI 组件的交互测试和无障碍测试
 - **工具函数测试**：核心业务逻辑的单元测试
 - **集成测试**：多组件协作的集成场景测试
 
 ### 测试覆盖
-- **17个测试文件**，覆盖项目核心功能
+
+- **17 个测试文件**，覆盖项目核心功能
 - **完整的边界情况**测试
 - **无障碍功能**专项测试
-- **AI服务故障转移**测试
+- **AI 服务故障转移**测试
 
 ## 🔧 自定义配置
 
 ### 添加新场景
+
 在 `lib/config/occasions.ts` 中添加新的场景配置：
 
 ```typescript
@@ -170,63 +177,24 @@ pnpm test:coverage
 }
 ```
 
-### 添加新AI供应商
-在 `lib/ai-service.ts` 中扩展AI服务配置：
-
-```typescript
-// 添加新的AI服务商配置
-const newProvider = {
-  baseURL: 'https://api.newprovider.com/v1',
-  model: 'new-model-name'
-}
-```
 
 ### 修改推荐逻辑
+
 在 `lib/config/recommendations.ts` 中自定义智能推荐算法。
 
-## 🔄 多AI供应商支持
+## 🔄 多 AI 供应商支持
 
-### 支持的AI服务商
+### 支持的 AI 服务商
 
 - **DeepSeek**：高性价比，中文理解优秀
-- **OpenAI**：GPT系列，全球领先
+- **OpenAI**：GPT 系列，全球领先
 - **通义千问**：阿里云，中文场景优化
 - **文心一言**：百度，本土化强
 - **Kimi**：月之暗面，长文本处理
 
-### 配置示例
-
-**DeepSeek（推荐）**
-```env
-PRIMARY_AI_API_KEY=sk-xxxxx
-PRIMARY_AI_BASE_URL=https://api.deepseek.com
-PRIMARY_AI_MODEL=deepseek-chat
-```
-
-**OpenAI**
-```env
-PRIMARY_AI_API_KEY=sk-xxxxx
-PRIMARY_AI_BASE_URL=https://api.openai.com/v1
-PRIMARY_AI_MODEL=gpt-3.5-turbo
-```
-
-**通义千问**
-```env
-PRIMARY_AI_API_KEY=sk-xxxxx
-PRIMARY_AI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
-PRIMARY_AI_MODEL=qwen-turbo
-```
-
-**Kimi**
-```env
-PRIMARY_AI_API_KEY=sk-xxxxx
-PRIMARY_AI_BASE_URL=https://api.moonshot.cn/v1
-PRIMARY_AI_MODEL=moonshot-v1-8k
-```
-
 ### 故障转移
 
-系统支持主力API+备用API配置，当主力API失败时自动切换到备用API，确保服务稳定性。
+系统支持主力 API+备用 API 配置，当主力 API 失败时自动切换到备用 API，确保服务稳定性。
 
 ## ♿ 无障碍支持
 
@@ -258,54 +226,60 @@ PRIMARY_AI_MODEL=moonshot-v1-8k
 
 ## 🔐 安全特性
 
-### 多层安全防护
+针对祝福语生成应用的特点，实现了恰当的安全防护：
 
-**中间件层安全 (middleware.ts)**
-- **智能速率限制**：每分钟8次，每天50次请求限制
-- **IP级别控制**：基于真实IP进行限流统计
-- **内存优化**：自动清理过期记录，防止内存泄漏
-- **Edge Runtime兼容**：适配边缘计算环境
+### 滥用防护（核心安全）
 
-**输入验证安全 (lib/validation.ts)**
-- **长度检查**：防止过长输入导致的性能问题
-- **内容过滤**：危险词汇和恶意内容检测
-- **文本清理**：输入标准化和特殊字符处理
+- **速率限制**：基于 Vercel KV 的分布式限流，防止 API 滥用
+  - 分钟级限制：8 次/分钟
+  - 日级限制：50 次/天
+  - 基于真实 IP 的精准控制
+- **输入验证**：防止提示词注入和 XSS 攻击
+  - 字符长度限制（5-300 字符）
+  - 危险模式过滤（提示词注入、脚本注入等）
+  - 文本标准化处理
 
-**HTTP安全响应头 (next.config.js)**
-- `X-Content-Type-Options: nosniff`：防止MIME类型嗅探攻击
-- `X-Frame-Options: SAMEORIGIN`：防止点击劫持攻击
-- `X-XSS-Protection: 1; mode=block`：内置XSS保护
+### 基础安全措施
 
-### API安全设计
-- **故障转移机制**：主力API失败自动切换备用API
-- **请求验证**：严格的参数校验和类型检查
-- **错误处理**：安全的错误信息返回，避免信息泄露
+- **HTTP 安全头**：防止常见 Web 攻击
+  - MIME 类型嗅探防护
+  - 点击劫持防护
+  - XSS 防护
+- **环境变量保护**：API 密钥等敏感信息安全存储
+- **错误处理**：不泄露内部错误信息
+
+### 高可用设计
+
+- **故障转移**：主力 API 失败时自动切换备用 API
+- **优雅降级**：即使限流服务不可用也能正常提供服务
 
 ## 📈 性能优化
 
 ### 运行时优化
-- **Edge Runtime**：API路由使用边缘计算，降低延迟
+
+- **Edge Runtime**：API 路由使用边缘计算，降低延迟
 - **客户端缓存**：合理的浏览器缓存策略
 - **代码分割**：按需加载，减少初始包体积
-- **图片优化**：Next.js内置图片优化
+- **图片优化**：Next.js 内置图片优化
 
 ### 开发体验优化
+
 - **热重载**：开发环境快速反馈
 - **类型检查**：编译时错误捕获
 - **ESLint**：代码质量保证
 - **测试覆盖**：持续集成质量保证
 
-## 🚀 部署
+## 🚀 快速部署
 
-### Vercel 部署（推荐）
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/ai-blessing-maker)
 
-1. 连接 GitHub 仓库到 Vercel
-2. 配置环境变量（PRIMARY_AI_API_KEY 等）
-3. 自动部署
+详细部署指南请查看 [📖 DEPLOYMENT.md](./DEPLOYMENT.md)，包含：
 
-### 其他平台
-
-项目支持所有支持 Next.js 的部署平台。
+- ✅ Vercel 部署步骤（推荐）
+- ✅ Vercel KV 配置教程
+- ✅ 环境变量配置说明
+- ✅ 其他平台部署方案
+- ✅ 常见问题解答
 
 ## 🤝 贡献
 
