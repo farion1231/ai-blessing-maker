@@ -1,10 +1,7 @@
 "use client";
 
-import { BlessingOptions } from "@/lib/api-client";
-
 interface BlessingResultProps {
   blessing: string;
-  options: BlessingOptions;
   loading: boolean;
   onCopy: () => void;
   onRegenerate: () => void;
@@ -12,8 +9,6 @@ interface BlessingResultProps {
 
 export default function BlessingResult({
   blessing,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  options,
   loading,
   onCopy,
   onRegenerate,

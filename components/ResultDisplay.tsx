@@ -43,7 +43,6 @@ export default function ResultDisplay({
           <div className="flex-1 overflow-y-auto overflow-x-hidden pr-2">
             <BlessingResult
               blessing={blessing}
-              options={options}
               loading={loading}
               onCopy={onCopy}
               onRegenerate={onRegenerate}

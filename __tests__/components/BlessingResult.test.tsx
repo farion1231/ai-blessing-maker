@@ -1,17 +1,7 @@
 import { render, screen, fireEvent } from '../setup/test-utils'
 import BlessingResult from '@/components/BlessingResult'
-import { BlessingOptions } from '@/lib/api-client'
 
 describe('BlessingResult', () => {
-  const mockOptions: BlessingOptions = {
-    useSmartMode: false,
-    scenario: '生日',
-    festival: '',
-    targetPerson: '朋友',
-    style: '温馨',
-    customDescription: ''
-  }
-
   const mockOnCopy = jest.fn()
   const mockOnRegenerate = jest.fn()
 
@@ -25,7 +15,6 @@ describe('BlessingResult', () => {
     render(
       <BlessingResult
         blessing={blessing}
-        options={mockOptions}
         loading={false}
         onCopy={mockOnCopy}
         onRegenerate={mockOnRegenerate}
@@ -39,7 +28,6 @@ describe('BlessingResult', () => {
     render(
       <BlessingResult
         blessing="测试祝福语"
-        options={mockOptions}
         loading={false}
         onCopy={mockOnCopy}
         onRegenerate={mockOnRegenerate}
@@ -54,7 +42,6 @@ describe('BlessingResult', () => {
     render(
       <BlessingResult
         blessing="测试祝福语"
-        options={mockOptions}
         loading={false}
         onCopy={mockOnCopy}
         onRegenerate={mockOnRegenerate}
@@ -71,7 +58,6 @@ describe('BlessingResult', () => {
     render(
       <BlessingResult
         blessing="测试祝福语"
-        options={mockOptions}
         loading={false}
         onCopy={mockOnCopy}
         onRegenerate={mockOnRegenerate}
@@ -88,7 +74,6 @@ describe('BlessingResult', () => {
     render(
       <BlessingResult
         blessing="测试祝福语"
-        options={mockOptions}
         loading={true}
         onCopy={mockOnCopy}
         onRegenerate={mockOnRegenerate}
@@ -103,7 +88,6 @@ describe('BlessingResult', () => {
     render(
       <BlessingResult
         blessing="测试祝福语"
-        options={mockOptions}
         loading={true}
         onCopy={mockOnCopy}
         onRegenerate={mockOnRegenerate}
