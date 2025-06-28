@@ -17,6 +17,17 @@ const RATE_LIMIT_CONFIG = {
 };
 
 /**
+ * 环境检测
+ */
+const isDevelopment = process.env.NODE_ENV === 'development';
+const hasKVConfig = !!(process.env.KV_URL || process.env.KV_REST_API_URL);
+
+/**
+ * 开发环境内存缓存（简单的速率限制）
+ */
+const memoryCache = new Map<string, { count: number; resetTime: number }>();
+
+/**
  * 速率限制结果接口
  */
 interface RateLimitResult {
@@ -75,11 +86,55 @@ function isValidIP(ip: string): boolean {
 }
 
 /**
- * 基于Redis的速率限制检查
+ * 开发环境的内存速率限制
+ */
+function checkMemoryRateLimit(identifier: string): RateLimitResult {
+  const now = Math.floor(Date.now() / 1000);
+  const key = `${identifier}:${Math.floor(now / RATE_LIMIT_CONFIG.minute.window)}`;
+  
+  const cached = memoryCache.get(key);
+  const count = cached ? cached.count + 1 : 1;
+  const resetTime = (Math.floor(now / RATE_LIMIT_CONFIG.minute.window) + 1) * RATE_LIMIT_CONFIG.minute.window;
+  
+  memoryCache.set(key, { count, resetTime });
+  
+  // 清理过期的缓存项
+  for (const [k, v] of memoryCache.entries()) {
+    if (v.resetTime <= now) {
+      memoryCache.delete(k);
+    }
+  }
+  
+  if (count > RATE_LIMIT_CONFIG.minute.max) {
+    return {
+      success: false,
+      limit: RATE_LIMIT_CONFIG.minute.max,
+      remaining: 0,
+      resetTime,
+      error: '请求太频繁，请稍后再试'
+    };
+  }
+  
+  return {
+    success: true,
+    limit: RATE_LIMIT_CONFIG.minute.max,
+    remaining: RATE_LIMIT_CONFIG.minute.max - count,
+    resetTime
+  };
+}
+
+/**
+ * 基于Redis的速率限制检查（生产环境）或内存限制（开发环境）
  * @param identifier 标识符（通常是IP地址）
  * @returns 限制检查结果
  */
 export async function checkRateLimit(identifier: string): Promise<RateLimitResult> {
+  // 开发环境且没有KV配置时，使用内存限制
+  if (isDevelopment && !hasKVConfig) {
+    console.log('开发环境：使用内存速率限制');
+    return checkMemoryRateLimit(identifier);
+  }
+
   try {
     const now = Math.floor(Date.now() / 1000);
     
@@ -140,8 +195,13 @@ export async function checkRateLimit(identifier: string): Promise<RateLimitResul
   } catch (error) {
     console.error('速率限制检查失败:', error);
     
-    // Redis连接失败时的降级策略：拒绝请求
-    // 这比允许无限制访问更安全
+    // 开发环境降级为内存限制，生产环境拒绝请求
+    if (isDevelopment) {
+      console.warn('开发环境KV不可用，降级为内存限制');
+      return checkMemoryRateLimit(identifier);
+    }
+    
+    // 生产环境保持严格策略
     return {
       success: false,
       limit: 0,
@@ -158,6 +218,21 @@ export async function checkRateLimit(identifier: string): Promise<RateLimitResul
  * @returns 当前限制状态
  */
 export async function getRateLimitStatus(identifier: string): Promise<RateLimitResult> {
+  // 开发环境且没有KV配置时，返回内存状态
+  if (isDevelopment && !hasKVConfig) {
+    const now = Math.floor(Date.now() / 1000);
+    const key = `${identifier}:${Math.floor(now / RATE_LIMIT_CONFIG.minute.window)}`;
+    const cached = memoryCache.get(key);
+    const count = cached?.count || 0;
+    
+    return {
+      success: count < RATE_LIMIT_CONFIG.minute.max,
+      limit: RATE_LIMIT_CONFIG.minute.max,
+      remaining: Math.max(0, RATE_LIMIT_CONFIG.minute.max - count),
+      resetTime: (Math.floor(now / RATE_LIMIT_CONFIG.minute.window) + 1) * RATE_LIMIT_CONFIG.minute.window
+    };
+  }
+
   try {
     const now = Math.floor(Date.now() / 1000);
     
@@ -182,6 +257,17 @@ export async function getRateLimitStatus(identifier: string): Promise<RateLimitR
     
   } catch (error) {
     console.error('获取速率限制状态失败:', error);
+    
+    // 开发环境降级处理
+    if (isDevelopment) {
+      return {
+        success: true,
+        limit: RATE_LIMIT_CONFIG.minute.max,
+        remaining: RATE_LIMIT_CONFIG.minute.max,
+        resetTime: Math.floor(Date.now() / 1000) + 60
+      };
+    }
+    
     return {
       success: false,
       limit: 0,
