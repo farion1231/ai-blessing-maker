@@ -47,12 +47,12 @@ export default function ResultDisplay({
           </div>
 
           {/* 复制成功提示区域 - 固定空间 */}
-          <div className="h-16 flex items-center justify-center flex-shrink-0 transition-all duration-300">
+          <div className="h-16 flex items-center justify-center flex-shrink-0 transition-all duration-300 relative z-20">
             {copySuccess && (
               <div
                 className={`bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-2xl p-4 text-center font-semibold shadow-lg ${
                   copyFading ? "fade-out" : "fade-in"
-                } max-w-md mx-auto`}
+                } max-w-md mx-auto relative z-20`}
               >
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-2xl">🎉</span>
