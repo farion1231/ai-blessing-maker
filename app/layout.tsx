@@ -36,11 +36,11 @@ export default function RootLayout({
           <div className="relative z-10 py-12">
             <div className="max-w-6xl mx-auto px-4">
               {/* 主标题 */}
-              <h1 className="text-5xl font-black text-center festive-title mb-4">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-center festive-title mb-4">
                 🎊 AI祝福语生成器 🎊
               </h1>
               {/* 副标题 */}
-              <p className="text-center text-xl font-semibold text-white drop-shadow-lg">
+              <p className="text-center text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-white drop-shadow-lg">
                 ✨ 智能生成个性化祝福语，让每一份祝福都独一无二 ✨
               </p>
               {/* 装饰性动画表情，不参与屏幕阅读器 */}

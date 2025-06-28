@@ -25,7 +25,7 @@ export default function SmartModeForm({
       </div>
       <textarea
         id="custom-description"
-        className="form-textarea flex-1 min-h-0 overflow-y-auto"
+        className="form-textarea flex-1 min-h-[120px] sm:min-h-0 overflow-y-auto"
         placeholder="🌟 例如：给室友小王发生日祝福，他是程序员，刚跳槽，性格内向但靠谱，认识10年了..."
         value={options.customDescription || ""}
         onChange={(e) =>

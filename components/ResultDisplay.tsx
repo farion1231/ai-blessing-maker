@@ -24,7 +24,7 @@ export default function ResultDisplay({
   onRegenerate,
 }: ResultDisplayProps) {
   return (
-    <div className="card-primary h-[380px] sm:h-[420px] md:h-[480px] lg:h-[520px] xl:h-[560px] flex flex-col transition-all duration-300 ease-in-out">
+    <div className="card-primary min-h-[380px] sm:h-[420px] md:h-[480px] lg:h-[520px] xl:h-[560px] flex flex-col transition-all duration-300 ease-in-out">
       {/* 装饰元素 */}
       <div className="decoration-tl"></div>
 
@@ -36,8 +36,8 @@ export default function ResultDisplay({
       {error && <ErrorMessage message={error} />}
 
       {blessing ? (
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 overflow-y-auto overflow-x-hidden pr-2">
+        <div className="flex-1 flex flex-col sm:overflow-hidden">
+          <div className="flex-1 sm:overflow-y-auto overflow-x-hidden pr-2">
             <BlessingResult
               blessing={blessing}
               loading={loading}
