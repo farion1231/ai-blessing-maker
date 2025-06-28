@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "使用AI智能生成个性化祝福语，支持多种场景、节日和目标人群选择",
   keywords: "祝福语,AI生成,个性化,节日祝福,生日祝福",
   icons: {
-    icon: '/favicon.svg',
+    icon: "/favicon.svg",
   },
 };
 
@@ -75,10 +75,11 @@ export default function RootLayout({
           </div>
         </header>
         {/* 主内容区域 */}
-        <main className="flex-1 flex items-center justify-center py-8" role="main">
-          <div className="w-full max-w-6xl mx-auto px-4">
-            {children}
-          </div>
+        <main
+          className="flex-1 flex items-center justify-center py-8"
+          role="main"
+        >
+          <div className="w-full max-w-6xl mx-auto px-4">{children}</div>
         </main>
         {/* 应用底部 */}
         <footer className="relative overflow-hidden bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 text-white py-8">
@@ -97,7 +98,15 @@ export default function RootLayout({
             </p>
             {/* 隐私声明 */}
             <p className="text-sm mt-2 opacity-90">
-              您的输入内容仅用于生成祝福语，不会被存储或记录 ❤️
+              您的输入内容仅用于生成祝福语，不会被存储或记录 ❤️ 项目已开源：
+              <a
+                href="https://github.com/farion1231/ai-blessing-maker"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-gray-200"
+              >
+                GitHub
+              </a>
             </p>
           </div>
         </footer>
