@@ -1,6 +1,5 @@
 "use client";
 
-import { BlessingOptions } from "@/lib/api-client";
 import ErrorMessage from "./ErrorMessage";
 import EmptyState from "./EmptyState";
 import BlessingResult from "./BlessingResult";
@@ -8,7 +7,6 @@ import BlessingResult from "./BlessingResult";
 interface ResultDisplayProps {
   blessing: string;
   error: string;
-  options: BlessingOptions;
   loading: boolean;
   copySuccess: boolean;
   copyFading: boolean;
@@ -19,7 +17,6 @@ interface ResultDisplayProps {
 export default function ResultDisplay({
   blessing,
   error,
-  options,
   loading,
   copySuccess,
   copyFading,

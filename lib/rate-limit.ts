@@ -99,7 +99,7 @@ function checkMemoryRateLimit(identifier: string): RateLimitResult {
   memoryCache.set(key, { count, resetTime });
   
   // 清理过期的缓存项
-  for (const [k, v] of memoryCache.entries()) {
+  for (const [k, v] of Array.from(memoryCache.entries())) {
     if (v.resetTime <= now) {
       memoryCache.delete(k);
     }

@@ -128,7 +128,6 @@ export default function BlessingGenerator() {
         <ResultDisplay
           blessing={blessing}
           error={error}
-          options={options}
           loading={loading}
           copySuccess={copySuccess}
           copyFading={copyFading}
