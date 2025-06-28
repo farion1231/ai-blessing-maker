@@ -122,44 +122,52 @@ PRIMARY_AI_MODEL=moonshot-v1-8k
 | `PRIMARY_AI_BASE_URL` | `https://api.deepseek.com` | AI 服务商的 API 地址 |
 | `PRIMARY_AI_MODEL` | `deepseek-chat` | 使用的模型名称 |
 
-#### 4. 配置 Vercel KV（速率限制）
+#### 4. 配置 Upstash KV（速率限制）
 
-##### 4.1 创建 KV 数据库
+> ⚠️ **重要变更**：从 2024 年底开始，Vercel KV 已停止为新项目提供服务，现在需要通过 Upstash 提供 KV 存储服务。
+
+##### 4.1 通过 Vercel Marketplace 添加 Upstash
 
 1. 在项目页面，点击顶部的 **"Storage"** 标签
-2. 点击 **"Create Database"**
-3. 选择 **"KV"** 作为数据库类型
-4. 配置数据库：
-   - **名称**：`blessing-rate-limit`（或自定义）
-   - **区域**：选择离目标用户最近的区域
-   - **主区域**：建议选择与项目部署相同的区域
-5. 点击 **"Create"**
+2. 点击 **"Browse Storage"** 或直接访问 [Vercel Marketplace](https://vercel.com/marketplace/upstash)
+3. 搜索并选择 **"Upstash"**
+4. 点击 **"Add Integration"**
 
-##### 4.2 连接到项目
+##### 4.2 配置 Upstash 集成
 
-1. 创建完成后，点击 **"Connect Project"**
-2. 选择你的项目
-3. 确认连接
+1. 如果没有 Upstash 账号，会自动引导你注册
+2. 登录后，选择要集成的 Vercel 项目
+3. 选择现有的 Redis 数据库或创建新的：
+   - **数据库名称**：`blessing-rate-limit`（或自定义）
+   - **区域**：选择离目标用户最近的区域（建议选择与 Vercel 项目相同区域）
+   - **类型**：选择 Redis（免费套餐足够使用）
+4. 点击 **"Create & Link"**
 
-##### 4.3 验证环境变量
+##### 4.3 确认集成连接
 
-连接成功后，Vercel 会自动添加以下环境变量：
+1. 集成完成后，Upstash 会自动将数据库连接到你的 Vercel 项目
+2. 返回 Vercel 项目的 **"Storage"** 页面，确认看到 Upstash Redis 数据库
 
-- `KV_URL`：KV 数据库的连接 URL
+##### 4.4 验证环境变量
+
+连接成功后，Upstash 集成会自动添加以下环境变量：
+
+- `KV_URL`：KV 数据库的连接 URL  
 - `KV_REST_API_URL`：REST API 端点
 - `KV_REST_API_TOKEN`：访问令牌
 - `KV_REST_API_READ_ONLY_TOKEN`：只读令牌
 
-在 "Environment Variables" 页面确认这些变量已添加。
+在项目的 **"Settings" → "Environment Variables"** 页面确认这些变量已自动添加。
 
-##### 4.4 Vercel KV 免费额度
+##### 4.5 Upstash Redis 免费额度
 
-免费套餐包含：
+Upstash Redis 免费套餐包含：
 - **256MB** 存储空间
-- **3,000** 个日请求
-- **150,000** 个月请求
+- **10,000** 个日请求
+- **100,000** 个月请求
+- **全球复制**：支持多区域部署
 
-> 💡 对于个人使用的祝福语生成应用，免费额度完全足够。
+> 💡 相比之前的 Vercel KV，Upstash 提供了更高的免费额度，对于个人使用的祝福语生成应用完全足够。
 
 #### 5. 部署项目
 
@@ -185,8 +193,8 @@ PRIMARY_AI_MODEL=moonshot-v1-8k
 ### Netlify
 
 1. **注意事项**：
-   - Netlify 不支持 Vercel KV
-   - 需要修改速率限制实现或使用其他方案（如 Upstash Redis）
+   - Netlify 不支持 Vercel KV 或 Upstash 集成
+   - 需要修改速率限制实现或直接使用 Upstash Redis API
 
 2. **部署步骤**：
    ```bash
@@ -233,9 +241,10 @@ PRIMARY_AI_MODEL=moonshot-v1-8k
 ### Q: 部署后速率限制不生效？
 
 **A:** 检查以下几点：
-1. 确认 Vercel KV 已正确连接
+1. 确认 Upstash Redis 已正确通过 Vercel Marketplace 集成
 2. 检查环境变量中是否有 `KV_REST_API_URL` 和 `KV_REST_API_TOKEN`
-3. 重新部署项目
+3. 在 Upstash 控制台确认数据库状态正常
+4. 重新部署项目
 
 ### Q: API 调用失败？
 
@@ -262,7 +271,7 @@ PRIMARY_AI_MODEL=moonshot-v1-8k
 
 **A:** 
 1. **Vercel Analytics**：查看访问统计
-2. **KV 使用量**：在 Storage 页面查看
+2. **Upstash 使用量**：在 Upstash 控制台查看 Redis 数据库使用情况
 3. **API 用量**：在各 AI 服务商的控制台查看
 
 ## 🆘 需要帮助？
