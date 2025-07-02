@@ -1,5 +1,7 @@
 // Next.js 类型定义和全局样式导入
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 // SEO 元数据配置
@@ -110,6 +112,8 @@ export default function RootLayout({
             </p>
           </div>
         </footer>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
