@@ -65,11 +65,14 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
   const now = new Date();
   const month = now.getMonth() + 1;
   const day = now.getDate();
+  const dayOfWeek = now.getDay();
+  const hour = now.getHours();
+  const timeBasedRecommendations: RecommendationItem[] = [];
   const recommendations: RecommendationItem[] = [];
 
   // 元旦推荐 (1月1日)
   if (month === 1 && day <= 7) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "new-year-day",
       title: "元旦祝福",
       scenario: "元旦",
@@ -83,7 +86,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 春节推荐 (1-2月)
   if (month === 1 || month === 2) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "spring-festival",
       title: "春节祝福",
       scenario: "春节",
@@ -97,7 +100,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 情人节推荐 (2月14日)
   if (month === 2 && day >= 10 && day <= 18) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "valentines-day",
       title: "情人节祝福",
       scenario: "情人节",
@@ -111,7 +114,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 妇女节推荐 (3月8日)
   if (month === 3 && day >= 5 && day <= 10) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "womens-day",
       title: "妇女节祝福",
       scenario: "妇女节",
@@ -125,7 +128,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 清明节推荐 (4月)
   if (month === 4) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "qingming-festival",
       title: "清明节祝福",
       scenario: "清明节",
@@ -139,7 +142,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 劳动节推荐 (5月1日)
   if (month === 5 && day <= 5) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "labor-day",
       title: "劳动节祝福",
       scenario: "劳动节",
@@ -153,7 +156,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 母亲节推荐 (5月第二个周日)
   if (month === 5) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "mothers-day",
       title: "母亲节祝福",
       scenario: "母亲节",
@@ -167,7 +170,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 端午节推荐 (农历五月初五，大概在公历6月)
   if (month === 6) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "dragon-boat-festival",
       title: "端午节祝福",
       scenario: "端午节",
@@ -181,7 +184,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 儿童节推荐 (6月1日)
   if (month === 6 && day <= 5) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "childrens-day",
       title: "儿童节祝福",
       scenario: "儿童节",
@@ -195,7 +198,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 父亲节推荐 (6月第三个周日)
   if (month === 6) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "fathers-day",
       title: "父亲节祝福",
       scenario: "父亲节",
@@ -209,7 +212,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 毕业季推荐 (6-7月)
   if (month >= 6 && month <= 7) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "graduation-season",
       title: "毕业季祝福",
       scenario: "毕业",
@@ -223,7 +226,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 七夕节推荐 (农历七月初七，大概在公历8月)
   if (month === 8) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "qixi-festival",
       title: "七夕节祝福",
       scenario: "七夕节",
@@ -237,7 +240,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 中元节推荐 (农历七月十五，大概在公历8月)
   if (month === 8) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "zhongyuan-festival",
       title: "中元节祝福",
       scenario: "中元节",
@@ -251,7 +254,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 中秋节推荐 (农历八月十五，大概在公历9月)
   if (month === 9) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "mid-autumn-festival",
       title: "中秋节祝福",
       scenario: "中秋节",
@@ -265,7 +268,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 教师节推荐 (9月10日)
   if (month === 9 && day >= 8 && day <= 12) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "teachers-day",
       title: "教师节祝福",
       scenario: "教师节",
@@ -279,7 +282,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 国庆节推荐 (10月)
   if (month === 10) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "national-day",
       title: "国庆节祝福",
       scenario: "国庆节",
@@ -293,7 +296,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 重阳节推荐 (农历九月初九，大概在公历10月)
   if (month === 10) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "chongyang-festival",
       title: "重阳节祝福",
       scenario: "重阳节",
@@ -307,7 +310,7 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 圣诞节推荐 (12月)
   if (month === 12) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "christmas",
       title: "圣诞节祝福",
       scenario: "圣诞节",
@@ -320,9 +323,8 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
   }
 
   // 周末推荐日常问候
-  const dayOfWeek = now.getDay();
   if (dayOfWeek === 0 || dayOfWeek === 6) {
-    recommendations.push({
+    timeBasedRecommendations.push({
       id: "weekend-greeting",
       title: "周末问候",
       scenario: "日常",
@@ -336,9 +338,8 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
 
   // 工作日早晨推荐
   if (dayOfWeek >= 1 && dayOfWeek <= 5) {
-    const hour = now.getHours();
     if (hour >= 6 && hour <= 10) {
-      recommendations.push({
+      timeBasedRecommendations.push({
         id: "morning-greeting",
         title: "早安问候",
         scenario: "日常",
@@ -351,5 +352,68 @@ export function getDateBasedRecommendations(): RecommendationItem[] {
     }
   }
 
-  return recommendations;
+  // 先添加时间相关推荐，再添加热门推荐
+  recommendations.push(...timeBasedRecommendations);
+  recommendations.push(...popularCombinations);
+  
+  // 确保始终返回6个推荐（去重后取前6个）
+  const uniqueRecommendations = recommendations.filter((item, index, self) => 
+    index === self.findIndex(t => t.id === item.id)
+  );
+  
+  // 如果推荐数量不足6个，用更多热门推荐补充
+  if (uniqueRecommendations.length < 6) {
+    const additionalRecommendations: RecommendationItem[] = [
+      {
+        id: "graduation-success",
+        title: "毕业升学",
+        scenario: "毕业",
+        targetPerson: "朋友",
+        style: "激励",
+        type: "popular",
+        emoji: "🎓",
+        description: "学业有成前程似锦",
+      },
+      {
+        id: "work-success",
+        title: "工作顺利",
+        scenario: "日常",
+        targetPerson: "同事",
+        style: "正式",
+        type: "popular",
+        emoji: "💼",
+        description: "职场加油打气",
+      },
+      {
+        id: "health-blessing",
+        title: "健康祝福",
+        scenario: "日常",
+        targetPerson: "家人",
+        style: "温馨",
+        type: "popular",
+        emoji: "🌺",
+        description: "健康平安最重要",
+      },
+      {
+        id: "friendship-blessing",
+        title: "友谊长存",
+        scenario: "日常",
+        targetPerson: "朋友",
+        style: "温馨",
+        type: "popular",
+        emoji: "🤝",
+        description: "珍贵友谊祝福",
+      },
+    ];
+    
+    // 添加额外推荐直到达到6个
+    for (const additional of additionalRecommendations) {
+      if (uniqueRecommendations.length >= 6) break;
+      if (!uniqueRecommendations.find(item => item.id === additional.id)) {
+        uniqueRecommendations.push(additional);
+      }
+    }
+  }
+  
+  return uniqueRecommendations.slice(0, 6);
 }
